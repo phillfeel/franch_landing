@@ -39,6 +39,7 @@ npm run build    # статический сайт в out/
 
 ## Деплой
 
-Push в `main` → GitHub Actions собирает сайт и публикует на GitHub Pages
-(Settings → Pages → Source: **GitHub Actions**). Для своего домена добавьте переменную `CUSTOM_DOMAIN=true`
-и `public/CNAME`.
+Production pipeline: push в `main` → GitHub Actions собирает статический Docker-образ → Docker Hub → Dokploy webhook.
+Финальный контейнер содержит только `out/` и Nginx; Node.js на VPS не запускается.
+
+Подробные инструкции по Docker Hub, GitHub Actions, Dokploy, DNS и rollback: `README_DEPLOY.md`.

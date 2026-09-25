@@ -3,6 +3,8 @@ import { Manrope, IBM_Plex_Mono } from "next/font/google";
 import { site } from "@/lib/content";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robotism.online";
+
 // Шрифты скачиваются на этапе сборки и отдаются с того же домена — без запросов к Google у посетителя.
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -18,14 +20,17 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: site.title,
   description: site.description,
+  alternates: { canonical: "/" },
   openGraph: {
     title: site.title,
     description: site.description,
     type: "website",
     locale: "ru_RU",
     siteName: site.name,
+    url: siteUrl,
   },
   robots: { index: true, follow: true },
 };

@@ -1,7 +1,5 @@
 import { images } from "@/lib/content";
 
-const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 // Слот изображения: пока картинки нет, показывает плейсхолдер с ID и пропорциями из ТЗ.
 export function Slot({
   id,
@@ -21,7 +19,7 @@ export function Slot({
     return (
       <div className={`slot slot--img ${className}`} style={style}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={base + src} alt={alt} loading="lazy" />
+        <img src={src} alt={alt} loading="lazy" />
       </div>
     );
   }
