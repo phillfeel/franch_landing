@@ -337,13 +337,6 @@ button, input, select { font-family: inherit; }
 .integration--more { border-style: dashed; border-color: var(--border-dash); background: var(--bg-soft); font: 500 13px/20px var(--font-mono); color: var(--text-3); }
 .integration--more::before, .integration--dup { display: none; }
 
-/* Команда */
-.person { padding: 24px; display: flex; flex-direction: column; gap: 16px; box-shadow: none; }
-.person .slot { border-radius: var(--radius-sm); }
-.person__info { display: flex; flex-direction: column; gap: 4px; font: 400 15px/22px var(--font-sans); }
-.person__info b { font: 600 20px/28px var(--font-sans); }
-.person__role { font-weight: 500; color: var(--brand); }
-
 /* FAQ */
 .faq { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .faq__item + .faq__item { border-top: 1px solid var(--border); }
@@ -576,12 +569,6 @@ button, input, select { font-family: inherit; }
   .integration--more { font-size: 12px; }
   .integration--dup { display: flex; }
   @keyframes marquee { to { transform: translateX(calc(-50% - var(--gap) / 2)); } }
-
-  .person { flex-direction: row; align-items: center; padding: 16px; }
-  .person .slot { width: 88px; flex: 0 0 88px; }
-  .person .slot__label { font-size: 9px; }
-  .person__info b { font-size: 17px; line-height: 24px; }
-  .person__info { font-size: 14px; line-height: 20px; }
 
   .faq__item summary { padding: 18px 20px; font-size: 16px; line-height: 24px; gap: 16px; }
   .faq__item p { padding: 0 20px 18px; font-size: 15px; line-height: 24px; }

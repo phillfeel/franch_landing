@@ -1,6 +1,6 @@
 import {
   site, nav, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
-  mainCase, upcomingCases, auditOffer, steps, security, team, faq, finalCta, type Product,
+  mainCase, upcomingCases, auditOffer, steps, security, faq, finalCta, type Product,
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
 import { Slot } from "@/components/Slot";
@@ -398,24 +398,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Команда */}
-        <section className="container section">
-          <h2 className="h2">Команда и эксперты</h2>
-          <p className="lead section__lead">Аудит проводит основатель, а не менеджер по продажам.</p>
-          <div className="grid-3">
-            {team.map((m) => (
-              <article key={m.img} className="card person">
-                <Slot id={m.img} label={`${m.img} · 1:1`} className="ratio-1-1" />
-                <div className="person__info">
-                  <b>{m.name}</b>
-                  <span className="person__role">{m.role}</span>
-                  <span className="muted">{m.text}</span>
-                </div>
-              </article>
-            ))}
           </div>
         </section>
 
