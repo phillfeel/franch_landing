@@ -1,14 +1,15 @@
 import {
   site, nav, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
-  mainCase, upcomingCases, auditOffer, steps, security, faq, finalCta, type Product,
+  mainCase, auditOffer, steps, security, faq, finalCta, type Product,
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
 import { Slot } from "@/components/Slot";
 import { AuditForm } from "@/components/AuditForm";
 import { MobileCta } from "@/components/MobileCta";
+import { CaseSlider } from "@/components/CaseSlider";
 
 // Серверный компонент: вся разметка рендерится при сборке в статический HTML.
-// На клиенте гидратируются только форма (AuditForm) и мобильная sticky-кнопка (MobileCta).
+// На клиенте гидратируются только форма (AuditForm), карусель кейса (CaseSlider) и мобильная sticky-кнопка (MobileCta).
 
 function Logo() {
   return (
@@ -247,17 +248,11 @@ export default function Home() {
         <section id="cases" className="container section anchor">
           <h2 className="h2 section__title">Результаты, а не обещания</h2>
           <article className="card case">
-            <div className="case__body">
-              <span className="pill pill--soft">{mainCase.tag}</span>
-              <h3 className="case__title">{mainCase.title}</h3>
-              <dl className="case__steps">
-                {mainCase.steps.map((s) => (
-                  <div key={s.k}>
-                    <dt>{s.k}</dt>
-                    <dd>{s.v}</dd>
-                  </div>
-                ))}
-              </dl>
+            <div className="case__head">
+              <div className="case__intro">
+                <span className="pill pill--soft">{mainCase.tag}</span>
+                <h3 className="case__title">{mainCase.title}</h3>
+              </div>
               <div className="case__metrics">
                 {mainCase.metrics.map((m) => (
                   <div key={m.label} className="case__metric">
@@ -269,42 +264,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="case__visual">
-              <Slot id="IMG-08" label="IMG-08 · 3:2 · 1200×800" className="case__bg" />
-              <div className="call-card">
-                <b>Разбор звонка · Менеджер Ирина</b>
-                {[
-                  { k: "Выявление потребности", v: 9, good: true },
-                  { k: "Работа с возражениями", v: 6 },
-                  { k: "Договорённость о шаге", v: 4 },
-                ].map((r) => (
-                  <div key={r.k} className="score">
-                    <div className="score__row">
-                      <span>{r.k}</span>
-                      <b className={r.good ? "is-positive" : ""}>{r.v} / 10</b>
-                    </div>
-                    <div className="score__bar">
-                      <i style={{ width: `${r.v * 10}%` }} className={r.good ? "is-good" : ""} />
-                    </div>
-                  </div>
-                ))}
-                <p className="call-card__tip">
-                  Рекомендация AI: фиксируйте следующий шаг в конце разговора — в 7 из 10 звонков он не назначен.
-                </p>
-              </div>
-            </div>
+            <CaseSlider slides={mainCase.slides} />
           </article>
-          <div className="grid-2 upcoming">
-            {upcomingCases.map((c) => (
-              <article key={c.img} className="soon-card">
-                <Slot id={c.img} label={`${c.img} · 3:2`} className="soon-card__img" />
-                <div>
-                  <span className="pill pill--grey">Кейс скоро</span>
-                  <h3 className="soon-card__title">{c.title}</h3>
-                </div>
-              </article>
-            ))}
-          </div>
           <div className="center">
             <Cta>Хочу такой же результат — получить аудит</Cta>
           </div>
