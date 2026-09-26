@@ -362,10 +362,6 @@ button, input, select { font-family: inherit; }
 .final__points { display: flex; flex-direction: column; gap: 14px; }
 .final__points li { display: flex; gap: 12px; align-items: flex-start; font: 500 17px/28px var(--font-sans); color: #dddfe8; }
 .final__points li svg { flex: 0 0 auto; margin-top: 4px; }
-.final__expert { display: flex; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .12); }
-.final__expert p { font: 500 16px/24px var(--font-sans); color: #dddfe8; }
-.final__avatar { width: 56px; height: 56px; flex: 0 0 56px; border-radius: 50%; border-color: rgba(255, 255, 255, .14); background: repeating-linear-gradient(135deg, #2a2e45 0 6px, #232741 6px 12px); }
-.final__avatar .slot__label { font-size: 9px; line-height: 12px; padding: 0; }
 
 /* Форма */
 .form-card { background: #fff; border-radius: var(--radius); padding: 36px; display: flex; flex-direction: column; gap: 18px; color: var(--text); }

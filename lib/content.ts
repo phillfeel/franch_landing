@@ -250,7 +250,6 @@ export const finalCta = {
     "Оценим эффект AI в рублях и часах",
     "Дадим дорожную карту пилота на 2–4 недели",
   ],
-  expert: "Проведу аудит лично — Имя, основатель Robotism",
 };
 
 export const formOptions = {

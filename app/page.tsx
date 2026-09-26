@@ -433,10 +433,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="final__expert">
-                  <Slot id="IMG-13" label="IMG-13" className="final__avatar" />
-                  <p>{finalCta.expert}</p>
-                </div>
               </div>
               <AuditForm />
             </div>
