@@ -255,8 +255,9 @@ export default function Home() {
               <div className="case__metrics">
                 {mainCase.metrics.map((m) => (
                   <div key={m.label} className="case__metric">
-                    <span className="case__metric-from">было {m.from}</span>
-                    <span className="case__metric-value">{m.to}</span>
+                    <span className="case__metric-value">
+                      {m.from} → <span className="is-positive">{m.to}</span>
+                    </span>
                     <span className="metric__label">{m.label}</span>
                   </div>
                 ))}

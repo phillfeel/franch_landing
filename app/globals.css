@@ -237,14 +237,13 @@ button, input, select { font-family: inherit; }
 /* Кейс */
 
 /* Оффер аудита */
-.case { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: center; padding: 48px; }
+.case { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 13fr); gap: 48px; align-items: center; padding: 48px; }
 .case__info { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .case__title { font: 700 28px/36px var(--font-sans); letter-spacing: -0.015em; text-wrap: balance; }
 .case__lead { font: 400 16px/26px var(--font-sans); color: var(--text-2); text-wrap: pretty; }
-.case__metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
-.case__metric { background: var(--brand-soft); border-radius: var(--radius-sm); padding: 18px 20px; display: flex; flex-direction: column; gap: 2px; }
-.case__metric-from { font: 500 13px/18px var(--font-mono); color: var(--text-3); text-decoration: line-through; }
-.case__metric-value { font: 800 36px/42px var(--font-sans); letter-spacing: -0.02em; color: var(--brand); }
+.case__metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; }
+.case__metric { background: var(--bg-soft); border-radius: var(--radius-sm); padding: 20px; display: flex; flex-direction: column; gap: 4px; }
+.case__metric-value { font: 700 clamp(20px, 1.8vw, 26px)/32px var(--font-sans); white-space: nowrap; }
 .case__points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .case__points li { position: relative; padding-left: 28px; font: 500 15px/22px var(--font-sans); }
 .case__points li::before { content: ""; position: absolute; left: 0; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--positive) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center / 10px no-repeat; }
@@ -460,8 +459,9 @@ button, input, select { font-family: inherit; }
   .case__info { gap: 16px; }
   .case__title { font-size: 22px; line-height: 30px; }
   .case__lead { font-size: 15px; line-height: 24px; }
-  .case__metric { padding: 14px 16px; }
-  .case__metric-value { font-size: 28px; line-height: 34px; }
+  .case__metrics { grid-template-columns: 1fr; gap: 10px; }
+  .case__metric { padding: 16px; }
+  .case__metric-value { font-size: 24px; line-height: 28px; }
   .case-gallery__bar { height: 28px; padding: 0 10px; }
   .case-gallery__bar i { width: 8px; height: 8px; }
   .case-gallery__zoom { opacity: 1; transform: none; right: 8px; bottom: 8px; padding: 5px 10px; font-size: 12px; }
