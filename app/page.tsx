@@ -5,11 +5,10 @@ import {
 import { Icon } from "@/components/Icon";
 import { Slot } from "@/components/Slot";
 import { AuditForm } from "@/components/AuditForm";
-import { MobileCta } from "@/components/MobileCta";
 import { CaseSlider } from "@/components/CaseSlider";
 
 // Серверный компонент: вся разметка рендерится при сборке в статический HTML.
-// На клиенте гидратируются только форма (AuditForm), карусель кейса (CaseSlider) и мобильная sticky-кнопка (MobileCta).
+// На клиенте гидратируются только форма (AuditForm) и карусель кейса (CaseSlider).
 
 function Logo() {
   return (
@@ -432,8 +431,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      <MobileCta label="Получить аудит" />
     </>
   );
 }

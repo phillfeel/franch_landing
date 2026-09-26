@@ -421,15 +421,6 @@ button, input, select { font-family: inherit; }
 .footer__bottom a { color: var(--text-3); }
 .footer__bottom a:hover { color: var(--text); }
 
-/* Мобильная sticky-кнопка */
-.mobile-cta {
-  display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-  background: rgba(255, 255, 255, .96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid var(--border); padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-  transform: translateY(110%); transition: transform .25s ease;
-}
-.mobile-cta.is-visible { transform: none; }
-
 /* ---------- Планшет ---------- */
 @media (max-width: 1100px) {
   .case { grid-template-columns: 1fr; gap: 32px; }
@@ -609,12 +600,10 @@ button, input, select { font-family: inherit; }
   .form-note { font-size: 13px; line-height: 18px; }
   .form-card--thanks { padding: 28px 20px; }
 
-  .footer { margin-top: 0; padding-bottom: 80px; }
+  .footer { margin-top: 0; }
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; padding-top: 40px; padding-bottom: 32px; }
   .footer__about { grid-column: 1 / -1; }
   .footer__bottom-inner { flex-direction: column; gap: 8px; font-size: 13px; }
-
-  .mobile-cta { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {
