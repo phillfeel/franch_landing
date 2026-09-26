@@ -24,6 +24,7 @@ export function AuditForm() {
   const [points, setPoints] = useState(formOptions.points[0]);
   const [goals, setGoals] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
+  const [more, setMore] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -107,43 +108,58 @@ export function AuditForm() {
         />
         {errors.contact && <span className="field__error">Оставьте телефон или ник в Telegram</span>}
       </div>
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="f-company">Компания</label>
-          <input
-            id="f-company"
-            type="text"
-            autoComplete="organization"
-            placeholder="Название сети"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="f-points">Количество точек</label>
-          <select id="f-points" value={points} onChange={(e) => setPoints(e.target.value)}>
-            {formOptions.points.map((p) => (
-              <option key={p}>{p}</option>
-            ))}
-          </select>
+      {/* На мобилках необязательные поля свёрнуты — форма-сквиз: имя, контакт, кнопка */}
+      <div className={`form-more${more ? " is-open" : ""}`}>
+        <button
+          type="button"
+          className="form-more__toggle"
+          aria-expanded={more}
+          aria-controls="f-more"
+          onClick={() => setMore((v) => !v)}
+        >
+          Детали о сети <span className="muted-light">необязательно</span>
+          <span className="form-more__plus" aria-hidden="true">+</span>
+        </button>
+        <div id="f-more" className="form-more__body">
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="f-company">Компания</label>
+              <input
+                id="f-company"
+                type="text"
+                autoComplete="organization"
+                placeholder="Название сети"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="f-points">Количество точек</label>
+              <select id="f-points" value={points} onChange={(e) => setPoints(e.target.value)}>
+                {formOptions.points.map((p) => (
+                  <option key={p}>{p}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <fieldset className="field">
+            <legend>Что хотите улучшить? <span className="muted-light">необязательно</span></legend>
+            <div className="chips">
+              {formOptions.goals.map((g) => (
+                <button
+                  type="button"
+                  key={g}
+                  className={`chip${goals.includes(g) ? " is-on" : ""}`}
+                  aria-pressed={goals.includes(g)}
+                  onClick={() => toggleGoal(g)}
+                >
+                  {g}
+                </button>
+              ))}
+            </div>
+          </fieldset>
         </div>
       </div>
-      <fieldset className="field">
-        <legend>Что хотите улучшить? <span className="muted-light">необязательно</span></legend>
-        <div className="chips">
-          {formOptions.goals.map((g) => (
-            <button
-              type="button"
-              key={g}
-              className={`chip${goals.includes(g) ? " is-on" : ""}`}
-              aria-pressed={goals.includes(g)}
-              onClick={() => toggleGoal(g)}
-            >
-              {g}
-            </button>
-          ))}
-        </div>
-      </fieldset>
       <label className="consent">
         <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
         <span>

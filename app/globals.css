@@ -392,6 +392,9 @@ button, input, select { font-family: inherit; }
 .consent { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font: 400 14px/20px var(--font-sans); color: var(--text-2); }
 .consent input { width: 20px; height: 20px; margin: 0; flex: 0 0 20px; accent-color: var(--brand); }
 .form-note { font: 400 14px/20px var(--font-sans); color: var(--text-2); text-align: center; }
+/* Необязательные поля: на десктопе всегда видны, на мобилках свёрнуты */
+.form-more, .form-more__body { display: contents; }
+.form-more__toggle { display: none; }
 .form-card--thanks { gap: 24px; padding: 40px; }
 .thanks__icon { width: 52px; height: 52px; border-radius: 50%; background: #eaf9f0; display: flex; align-items: center; justify-content: center; }
 .thanks__title { font: 700 28px/36px var(--font-sans); margin-bottom: 8px; }
@@ -576,14 +579,28 @@ button, input, select { font-family: inherit; }
   .final { padding: 0; }
   .final__box { border-radius: 0; }
   .final__glow { width: 360px; height: 360px; bottom: -200px; }
-  .final__inner { grid-template-columns: 1fr; padding: 48px 20px 32px; gap: 28px; }
+  .final__inner { grid-template-columns: 1fr; padding: 40px 16px 24px; gap: 24px; }
   .final__text { gap: 20px; }
   .final__text .h2 { font-size: 26px; }
   .final__points li { font-size: 16px; line-height: 24px; }
-  .form-card { padding: 24px 20px; gap: 16px; }
-  .field input, .field select { height: 52px; }
-  .field-row { grid-template-columns: 1fr; }
-  .chip { height: 34px; font-size: 13px; padding: 0 12px; }
+  .form-card { padding: 20px 16px; gap: 12px; }
+  .field { gap: 4px; }
+  .field label, .field legend { font-size: 13px; line-height: 18px; }
+  .field input, .field select { height: 48px; }
+  .field-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .chip { height: 32px; font-size: 13px; padding: 0 12px; }
+  .form-more { display: block; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+  .form-more__toggle {
+    display: flex; align-items: center; gap: 6px; width: 100%; min-height: 44px; padding: 10px 14px;
+    background: none; border: 0; cursor: pointer; text-align: left; font: 600 14px/20px var(--font-sans); color: var(--text-2);
+  }
+  .form-more__toggle .muted-light { font-size: 13px; }
+  .form-more__plus { margin-left: auto; color: var(--brand); font: 400 22px/20px var(--font-sans); transition: transform .2s; }
+  .form-more.is-open .form-more__plus { transform: rotate(45deg); }
+  .form-more__body { display: none; }
+  .form-more.is-open .form-more__body { display: flex; flex-direction: column; gap: 12px; padding: 4px 14px 14px; }
+  .consent { font-size: 12px; line-height: 16px; gap: 10px; }
+  .form-note { font-size: 13px; line-height: 18px; }
   .form-card--thanks { padding: 28px 20px; }
 
   .footer { margin-top: 0; padding-bottom: 80px; }
