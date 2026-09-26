@@ -9,7 +9,7 @@ export const site = {
   cities: "Москва | Челябинск",
   telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/",
   legal: "ООО «Роботизм» · ИНН 0000000000 · ОГРН 0000000000000",
-  cta: "Получить бесплатный аудит",
+  cta: "Получить разбор бизнес-процесса",
 };
 
 export const nav = [
