@@ -52,8 +52,6 @@ export const hero = {
   ],
 };
 
-export const trustTech = ["1С", "Bitrix24", "amoCRM", "Yandex Cloud", "GigaChat", "Telegram"];
-
 export const pains = [
   { img: "IMG-02", title: "Вы не видите, что происходит в точках, пока не приедете сами" },
   { img: "IMG-03", title: "Стандарты из френчбука на местах не соблюдают" },
@@ -198,9 +196,11 @@ export const security = {
     { text: "Российские модели: GigaChat, YandexGPT, Yandex Cloud" },
     { text: "NDA и договор" },
   ],
+  // Технологии — AI-стек в центре схемы; интеграции — системы клиента вокруг него.
+  tech: ["GigaChat", "YandexGPT", "Yandex Cloud", "OpenAI", "Claude", "Open-source LLM"],
   integrations: [
-    "1С", "Bitrix24", "amoCRM", "Avito", "Ozon", "Wildberries", "Telegram", "VK",
-    "Яндекс", "2ГИС", "ЮKassa", "OpenAI", "Claude", "YandexGPT", "GigaChat",
+    "1С", "Bitrix24", "amoCRM", "Avito", "Ozon", "Wildberries",
+    "Telegram", "VK", "Яндекс", "2ГИС", "ЮKassa",
   ],
 };
 

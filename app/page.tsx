@@ -1,5 +1,5 @@
 import {
-  site, nav, hero, trustTech, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
+  site, nav, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
   mainCase, upcomingCases, auditOffer, steps, security, team, faq, finalCta, type Product,
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
@@ -43,6 +43,13 @@ function ProductCard({ p }: { p: Product }) {
     </article>
   );
 }
+
+// Центры ячеек по периметру сетки 4×4 (в % от схемы): сюда тянутся «провода» от AI-ядра в центре.
+const hubCells: [number, number][] = [12.5, 37.5, 62.5, 87.5].flatMap((y, r) =>
+  [12.5, 37.5, 62.5, 87.5]
+    .filter((_, c) => r === 0 || r === 3 || c === 0 || c === 3)
+    .map((x): [number, number] => [x, y]),
+);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -127,28 +134,6 @@ export default function Home() {
               <span className="float-card__label">Точек онлайн</span>
               <span className="float-card__value">132</span>
               <span className="float-card__note">пример сети</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Полоса доверия */}
-        <section className="trust" aria-label="Нам доверяют">
-          <div className="container trust__inner">
-            <span className="eyebrow">Нам доверяют</span>
-            <div className="trust__logos">
-              <div className="trust__track">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div key={i} className="logo-slot">LOGO-{i}</div>
-                ))}
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div key={`d${i}`} className="logo-slot logo-slot--dup" aria-hidden="true">LOGO-{i}</div>
-                ))}
-              </div>
-            </div>
-            <div className="trust__tech">
-              {trustTech.map((t) => (
-                <span key={t}>{t}</span>
-              ))}
             </div>
           </div>
         </section>
@@ -381,12 +366,33 @@ export default function Home() {
               </ul>
             </div>
             <div className="security__right">
-              <span className="eyebrow">Интеграции</span>
-              <div className="integrations">
-                {security.integrations.map((t) => (
-                  <div key={t} className="integration">{t}</div>
-                ))}
-                <div className="integration integration--more">+ ваши</div>
+              <span className="eyebrow">Технологии и интеграции</span>
+              <div className="hub">
+                <svg className="hub__wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  {hubCells.map(([x, y]) => (
+                    <line key={`${x}-${y}`} x1={x} y1={y} x2={50} y2={50} />
+                  ))}
+                </svg>
+                <div className="hub__core">
+                  <span className="hub__label">AI-ядро · технологии</span>
+                  <ul className="hub__tech">
+                    {security.tech.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="hub__ring">
+                  <div className="hub__track">
+                    {security.integrations.map((t) => (
+                      <div key={t} className="integration">{t}</div>
+                    ))}
+                    <div className="integration integration--more">+ ваши</div>
+                    {security.integrations.map((t) => (
+                      <div key={`d${t}`} className="integration integration--dup" aria-hidden="true">{t}</div>
+                    ))}
+                    <div className="integration integration--more integration--dup" aria-hidden="true">+ ваши</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
