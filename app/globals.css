@@ -322,6 +322,7 @@ button, input, select { font-family: inherit; }
   font: 600 14px/20px var(--font-sans); padding: 6px 12px; border-radius: 999px;
   background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14);
 }
+.hub__tech .hub__tech-dup { display: none; }
 .hub__ring, .hub__track { display: contents; }
 .integration {
   position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 8px;
@@ -553,24 +554,28 @@ button, input, select { font-family: inherit; }
   .security { grid-template-columns: 1fr; gap: 32px; }
   .security__img { aspect-ratio: 16 / 9; }
   .security__points li { font-size: 16px; line-height: 24px; }
-  /* На телефоне — полоса: сверху технологии строкой, снизу бегущая лента интеграций */
+  /* На телефоне — полоса из двух бегущих лент: сверху технологии, снизу интеграции в обратную сторону */
   .security__right {
     position: static; margin: 0 -20px; padding: 28px 20px; gap: 16px; overflow: hidden;
     background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
   .hub { display: flex; flex-direction: column; gap: 16px; aspect-ratio: auto; }
   .hub__wires, .hub__label { display: none; }
-  .hub__core { padding: 0; background: none; color: var(--text-3); }
+  .hub__core { display: block; margin: 0 -20px; padding: 0; background: none; color: var(--text-3); }
   .hub__core::after { display: none; }
-  .hub__tech { gap: 8px 18px; }
-  .hub__tech li { padding: 0; background: none; border: 0; font: 500 14px/20px var(--font-sans); }
+  .hub__tech {
+    --gap: 24px; flex-wrap: nowrap; width: max-content; gap: var(--gap); margin-left: 20px;
+    animation: marquee 24s linear infinite reverse;
+  }
+  .hub__tech li { flex: 0 0 auto; padding: 0; background: none; border: 0; font: 500 14px/20px var(--font-sans); white-space: nowrap; }
+  .hub__tech .hub__tech-dup { display: block; }
   .hub__ring { display: block; margin: 0 -20px; }
-  .hub__track { display: flex; width: max-content; gap: 10px; margin-left: 20px; animation: marquee 32s linear infinite; }
+  .hub__track { --gap: 10px; display: flex; width: max-content; gap: var(--gap); margin-left: 20px; animation: marquee 32s linear infinite; }
   .integration { flex: 0 0 auto; min-width: 110px; height: 48px; padding: 0 16px; border-radius: 10px; font-size: 14px; }
   .integration::before { display: none; }
   .integration--more { font-size: 12px; }
   .integration--dup { display: flex; }
-  @keyframes marquee { to { transform: translateX(calc(-50% - 5px)); } }
+  @keyframes marquee { to { transform: translateX(calc(-50% - var(--gap) / 2)); } }
 
   .person { flex-direction: row; align-items: center; padding: 16px; }
   .person .slot { width: 88px; flex: 0 0 88px; }

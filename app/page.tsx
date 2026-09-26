@@ -379,6 +379,9 @@ export default function Home() {
                     {security.tech.map((t) => (
                       <li key={t}>{t}</li>
                     ))}
+                    {security.tech.map((t) => (
+                      <li key={`d${t}`} className="hub__tech-dup" aria-hidden="true">{t}</li>
+                    ))}
                   </ul>
                 </div>
                 <div className="hub__ring">
