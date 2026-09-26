@@ -190,14 +190,14 @@ export default function Home() {
             <Slot id="IMG-06" label="IMG-06 · 16:9 · 1600×900" className="solution__img" />
           </div>
 
-          <h3 className="subhead">Фронт-офис: клиенты, продажи, репутация</h3>
+          <h3 className="subhead">Клиенты, продажи, репутация</h3>
           <div className="products products--5">
             {frontOffice.map((p) => (
               <ProductCard key={p.title} p={p} />
             ))}
           </div>
 
-          <h3 className="subhead">Бэк-офис: управление сетью</h3>
+          <h3 className="subhead">Управление сетью</h3>
           <div className="products products--3">
             {backOffice.map((p) => (
               <ProductCard key={p.title} p={p} />
