@@ -17,72 +17,60 @@ function Arrow({ dir }: { dir: "prev" | "next" }) {
   );
 }
 
-// Карусель скриншотов кейса: описание и результаты меняются вместе со слайдом, клик по картинке открывает её крупно.
+// Галерея скриншотов кейса: крупный кадр в рамке браузера + миниатюры, клик по кадру открывает его во весь экран.
 export function CaseSlider({ slides }: { slides: CaseSlide[] }) {
   const [active, setActive] = useState(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const slide = slides[active];
-  const last = slides.length - 1;
-  const prev = () => setActive((i) => Math.max(0, i - 1));
-  const next = () => setActive((i) => Math.min(last, i + 1));
+  const count = slides.length;
+  const go = (step: number) => setActive((i) => (i + step + count) % count);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
     const onKey = (e: KeyboardEvent) => {
       if (!dialog.open) return;
-      if (e.key === "ArrowLeft") setActive((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowRight") setActive((i) => Math.min(last, i + 1));
+      if (e.key === "ArrowLeft") setActive((i) => (i - 1 + count) % count);
+      if (e.key === "ArrowRight") setActive((i) => (i + 1) % count);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [last]);
-
-  const nav = (
-    <>
-      <button type="button" className="case-slider__nav case-slider__nav--prev" onClick={prev} disabled={active === 0} aria-label="Предыдущий слайд">
-        <Arrow dir="prev" />
-      </button>
-      <button type="button" className="case-slider__nav case-slider__nav--next" onClick={next} disabled={active === last} aria-label="Следующий слайд">
-        <Arrow dir="next" />
-      </button>
-    </>
-  );
+  }, [count]);
 
   return (
-    <div className="case-slider">
-      <div className="case-slider__stage">
-        <button type="button" className="case-slider__shot" onClick={() => dialogRef.current?.showModal()} aria-label="Открыть скриншот крупно">
+    <div className="case-gallery">
+      <div className="case-gallery__frame">
+        <div className="case-gallery__bar" aria-hidden="true">
+          <i /><i /><i />
+          <span>{slide.caption}</span>
+        </div>
+        <button type="button" className="case-gallery__shot" onClick={() => dialogRef.current?.showModal()} aria-label="Открыть скриншот крупно">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={slide.src} alt={slide.alt} width={1600} height={894} loading="lazy" />
+          <span className="case-gallery__zoom" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Увеличить
+          </span>
         </button>
-        {nav}
       </div>
 
-      <div className="case-slider__dots" role="tablist" aria-label="Слайды кейса">
+      <div className="case-gallery__thumbs" role="tablist" aria-label="Скриншоты кейса">
         {slides.map((s, i) => (
           <button
             key={s.src}
             type="button"
             role="tab"
             aria-selected={i === active}
-            aria-label={`Слайд ${i + 1}`}
-            className={`case-slider__dot${i === active ? " is-active" : ""}`}
+            className={`case-gallery__thumb${i === active ? " is-active" : ""}`}
             onClick={() => setActive(i)}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={s.src} alt="" width={1600} height={894} loading="lazy" />
+            <span>{s.caption}</span>
+          </button>
         ))}
-      </div>
-
-      <div className="case-slider__text">
-        <p className="case-slider__desc">{slide.description}</p>
-        <div>
-          <h4 className="case-slider__results-title">{slide.resultsTitle}</h4>
-          <ul className="case-slider__results">
-            {slide.results.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-        </div>
       </div>
 
       <dialog
@@ -93,7 +81,17 @@ export function CaseSlider({ slides }: { slides: CaseSlide[] }) {
         <div className="case-lightbox__inner">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={slide.src} alt={slide.alt} />
-          {nav}
+          <div className="case-lightbox__bar">
+            <button type="button" className="case-lightbox__nav" onClick={() => go(-1)} aria-label="Предыдущий скриншот">
+              <Arrow dir="prev" />
+            </button>
+            <span>
+              {slide.caption} · {active + 1}/{count}
+            </span>
+            <button type="button" className="case-lightbox__nav" onClick={() => go(1)} aria-label="Следующий скриншот">
+              <Arrow dir="next" />
+            </button>
+          </div>
           <button type="button" className="case-lightbox__close" onClick={() => dialogRef.current?.close()} aria-label="Закрыть">
             ×
           </button>

@@ -248,21 +248,24 @@ export default function Home() {
         <section id="cases" className="container section anchor">
           <h2 className="h2 section__title">Результаты, а не обещания</h2>
           <article className="card case">
-            <div className="case__head">
-              <div className="case__intro">
-                <span className="pill pill--soft">{mainCase.tag}</span>
-                <h3 className="case__title">{mainCase.title}</h3>
-              </div>
+            <div className="case__info">
+              <span className="pill pill--soft">{mainCase.tag}</span>
+              <h3 className="case__title">{mainCase.title}</h3>
+              <p className="case__lead">{mainCase.lead}</p>
               <div className="case__metrics">
                 {mainCase.metrics.map((m) => (
                   <div key={m.label} className="case__metric">
-                    <span className="case__metric-value">
-                      {m.from} → <span className="is-positive">{m.to}</span>
-                    </span>
+                    <span className="case__metric-from">было {m.from}</span>
+                    <span className="case__metric-value">{m.to}</span>
                     <span className="metric__label">{m.label}</span>
                   </div>
                 ))}
               </div>
+              <ul className="case__points">
+                {mainCase.points.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
             </div>
             <CaseSlider slides={mainCase.slides} />
           </article>
