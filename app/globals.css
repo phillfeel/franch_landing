@@ -85,7 +85,6 @@ button, input, select { font-family: inherit; }
   padding: 7px 12px; border-radius: 999px; font: 600 13px/16px var(--font-sans);
 }
 .pill--soft { background: var(--brand-soft); color: var(--brand-hover); }
-.pill--grey { background: var(--border); color: var(--text-2); font-size: 12px; padding: 5px 10px; }
 .pill--lg { padding: 10px 16px; font-size: 15px; line-height: 20px; white-space: normal; }
 .pill--dot { padding: 8px 14px; font-size: 14px; }
 .pill--dot::before {
@@ -201,8 +200,8 @@ button, input, select { font-family: inherit; }
 .product__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .product__sub { font: 600 15px/22px var(--font-sans); color: var(--brand-hover); }
 .product__text { font: 400 15px/24px var(--font-sans); color: var(--text-2); }
+.product__note { font: 400 13px/20px var(--font-sans); color: var(--text-3); }
 .product__result { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); font: 600 15px/22px var(--font-sans); color: var(--positive); }
-.product--soon { background: var(--bg-soft); border-style: dashed; border-color: var(--border-dash); box-shadow: none; }
 
 /* Дашборд */
 .dash { display: grid; grid-template-columns: .85fr 1.15fr; gap: 48px; align-items: center; }

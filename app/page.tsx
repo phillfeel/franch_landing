@@ -1,5 +1,5 @@
 import {
-  site, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
+  site, hero, pains, scheme, frontOffice, backOffice, dashboard,
   mainCase, auditOffer, steps, security, faq, finalCta, type Product,
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
@@ -42,6 +42,7 @@ function ProductCard({ p }: { p: Product }) {
           <Icon name="arrow" size={16} width={2} />
         </a>
       )}
+      {p.note && <p className="product__note">{p.note}</p>}
       <span className="product__result">{p.result}</span>
     </article>
   );
@@ -157,16 +158,6 @@ export default function Home() {
             {backOffice.map((p) => (
               <ProductCard key={p.title} p={p} />
             ))}
-            <article className="card product product--soon">
-              <div className="product__head">
-                <div className="icon-tile">
-                  <Icon name="book" stroke="#6D4AFF" />
-                </div>
-                <span className="pill pill--grey">{sopCopilot.tag}</span>
-              </div>
-              <h3 className="h3">{sopCopilot.title}</h3>
-              <p className="product__text">{sopCopilot.text}</p>
-            </article>
           </div>
         </section>
 
