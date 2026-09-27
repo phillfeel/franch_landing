@@ -364,6 +364,19 @@ button, input, select { font-family: inherit; }
 .case-lightbox__nav:hover { background: var(--brand); }
 .case-lightbox__close { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(15, 18, 34, .75); color: #fff; font: 400 26px/1 var(--font-sans); cursor: pointer; }
 
+/* Презентация кейса в карточке продукта: слайды 1920×1080 целиком масштабируются под окно (scale из DeckButton). */
+.product__deck { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: var(--brand-soft); color: var(--brand-hover); font: 600 14px/1 var(--font-sans); cursor: pointer; transition: background-color .15s, color .15s; }
+.product__deck:hover { background: var(--brand); color: #fff; }
+.deck { width: min(1600px, calc(100vw - 32px)); outline: none; }
+.deck::backdrop { background: rgba(15, 18, 34, .95); }
+.deck .case-lightbox__bar span { min-width: 180px; text-align: center; }
+.deck .case-lightbox__inner { width: min(100%, calc((100dvh - 100px) * 16 / 9)); margin: 0 auto; }
+.deck__viewport { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-sm); background: #f7f7fb; touch-action: pan-y pinch-zoom; }
+.deck__stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.deck__stage > section { position: absolute; inset: 0; }
+.deck__hint { display: none; text-align: center; font: 500 13px/18px var(--font-sans); color: rgba(255, 255, 255, .7); }
+@media (max-width: 760px) and (orientation: portrait) { .deck__hint { display: block; } }
+
 .band { background: var(--bg-soft); border-top: 1px solid var(--border); margin-top: var(--section); padding: var(--section) 0; }
 .offer { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
 .offer__text { display: flex; flex-direction: column; gap: 28px; }
@@ -551,6 +564,8 @@ button, input, select { font-family: inherit; }
   .case-gallery__thumb { padding: 4px 4px 8px; gap: 6px; }
   .case-gallery__thumb span { padding: 0 2px; font-size: 11px; line-height: 14px; }
   .case-lightbox { width: calc(100vw - 16px); }
+  .deck .case-lightbox__inner { width: min(100%, calc((100dvh - 112px) * 16 / 9)); gap: 8px; padding-top: 40px; }
+  .deck .case-lightbox__close { top: 0; right: 0; width: 32px; height: 32px; font-size: 22px; background: rgba(255, 255, 255, .14); }
   :root { --section: 72px; }
   body { font-size: 16px; line-height: 26px; }
   .container { padding-left: 20px; padding-right: 20px; }

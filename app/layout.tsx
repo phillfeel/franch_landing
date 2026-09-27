@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Manrope, IBM_Plex_Mono, Onest } from "next/font/google";
 import { site } from "@/lib/content";
 import "./globals.css";
 
@@ -17,6 +17,14 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+});
+// Шрифт слайдов презентации кейса: без preload — файлы качаются, только когда презентацию открыли.
+const onest = Onest({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-deck",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -43,7 +51,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${manrope.variable} ${plexMono.variable}`}>
+    <html lang="ru" className={`${manrope.variable} ${plexMono.variable} ${onest.variable}`}>
       <body>{children}</body>
     </html>
   );

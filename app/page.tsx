@@ -7,9 +7,10 @@ import { Slot } from "@/components/Slot";
 import { DashboardMockup } from "@/components/DashboardMockup";
 import { AuditForm } from "@/components/AuditForm";
 import { CaseSlider } from "@/components/CaseSlider";
+import { DeckButton } from "@/components/DeckButton";
 
 // Серверный компонент: вся разметка рендерится при сборке в статический HTML.
-// На клиенте гидратируются только форма (AuditForm) и карусель кейса (CaseSlider).
+// На клиенте гидратируются только форма (AuditForm), карусель кейса (CaseSlider) и презентация (DeckButton).
 
 function Logo() {
   return (
@@ -40,6 +41,7 @@ function ProductCard({ p }: { p: Product }) {
       <h3 className="h3">{p.title}</h3>
       {p.sub && <p className="product__sub">{p.sub}</p>}
       <p className="product__text">{p.text}</p>
+      {p.deck && <DeckButton label={p.deck.label} title={p.deck.title} />}
       <span className="product__result">{p.result}</span>
     </article>
   );

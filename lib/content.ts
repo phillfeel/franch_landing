@@ -80,6 +80,8 @@ export type Product = {
   text: string;
   result: string;
   tag?: string;
+  // Кнопка, открывающая презентацию кейса (components/deckSlides.ts).
+  deck?: { label: string; title: string };
 };
 
 export const frontOffice: Product[] = [
@@ -88,6 +90,7 @@ export const frontOffice: Product[] = [
     title: "Контент для соцсетей сети",
     text: "Система сама находит свежие новости по теме, переписывает под голос бренда и публикует по расписанию. Тексты и изображения для рекламы, карточки товаров.",
     result: "Регулярный контент без редактора",
+    deck: { label: "Кейс: AI-новости · 3 слайда", title: "Кейс: AI-движок новостного контента" },
   },
   {
     icon: "refresh",
