@@ -194,6 +194,8 @@ button, input, select { font-family: inherit; }
 .scheme__title { font: 600 19px/26px var(--font-sans); }
 .scheme__text { font: 400 15px/22px var(--font-sans); color: var(--text-2); }
 .solution__img { min-height: 420px; }
+.solution__img.slot--img { background: #f5f3fb; }
+.solution__img.slot--img img { position: absolute; inset: 0; object-fit: contain; padding: 24px 0; }
 .subhead { font: 600 15px/20px var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); margin: 56px 0 20px; }
 .products { display: grid; gap: 24px; }
 .products--front { grid-template-columns: repeat(3, 1fr); }
@@ -621,6 +623,7 @@ button, input, select { font-family: inherit; }
   .scheme__title { font-size: 17px; line-height: 24px; }
   .scheme__line { height: 12px; margin: 4px 0 4px 28px; }
   .solution__img { min-height: 0; aspect-ratio: 16 / 9; }
+  .solution__img.slot--img { aspect-ratio: 3 / 4; }
   .subhead { margin: 40px 0 16px; font-size: 13px; }
   .products--front, .products--3 { grid-template-columns: 1fr; gap: 12px; }
   .product--wide .product__modules { grid-template-columns: 1fr; gap: 8px; }

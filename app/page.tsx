@@ -151,7 +151,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Slot id="IMG-06" label="IMG-06 · 16:9 · 1600×900" className="solution__img" />
+            <Slot id="IMG-06" label="IMG-06 · 16:9 · 1600×900" className="solution__img" alt="Данные точек сети через сбор данных и AI-ядро попадают на дашборд собственника" />
           </div>
 
           <h3 className="subhead">Клиенты, продажи, репутация</h3>
