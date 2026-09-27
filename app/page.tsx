@@ -105,15 +105,6 @@ export default function Home() {
           </div>
           <div className="hero__visual">
             <Slot id="IMG-01" label="IMG-01 · 4:5 · 1000×1250" className="ratio-4-5" alt="AI-ядро, связанное со всеми точками франчайзинговой сети" eager />
-            <div className="float-card float-card--tl">
-              <span className="float-card__label">Контроль стандартов</span>
-              <span className="float-card__value is-positive">98,4%</span>
-            </div>
-            <div className="float-card float-card--br">
-              <span className="float-card__label">Точек онлайн</span>
-              <span className="float-card__value">132</span>
-              <span className="float-card__note">пример сети</span>
-            </div>
           </div>
         </section>
 

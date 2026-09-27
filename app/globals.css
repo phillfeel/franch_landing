@@ -159,16 +159,6 @@ button, input, select { font-family: inherit; }
 .metric__value { font: 700 22px/28px var(--font-sans); }
 .metric__label { font: 400 14px/20px var(--font-sans); color: var(--text-2); }
 .hero__visual { position: relative; }
-.float-card {
-  position: absolute; background: rgba(255, 255, 255, .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 8px 30px rgba(15, 18, 34, .08);
-  padding: 16px 20px; display: flex; flex-direction: column; gap: 6px;
-}
-.float-card--tl { left: -28px; top: 64px; }
-.float-card--br { right: -24px; bottom: 56px; }
-.float-card__label { font: 500 13px/16px var(--font-sans); color: var(--text-2); }
-.float-card__value { font: 700 26px/28px var(--font-sans); }
-.float-card__note { font: 400 11px/14px var(--font-mono); color: var(--text-3); }
 
 /* Боли */
 .pain { display: flex; gap: 24px; align-items: center; padding: 24px; }
@@ -547,8 +537,6 @@ button, input, select { font-family: inherit; }
   .product--wide .product__modules { grid-column: auto; grid-row: auto; }
   .timeline { grid-template-columns: repeat(3, 1fr); }
   .final__inner { padding: 64px 40px; gap: 40px; }
-  .float-card--tl { left: -12px; }
-  .float-card--br { right: -12px; }
   .hub { gap: 14px; }
   .hub__core { padding: 16px; gap: 10px; }
   .hub__label { font-size: 11px; }
@@ -605,11 +593,6 @@ button, input, select { font-family: inherit; }
   .hero__visual .slot { aspect-ratio: 4 / 3; }
   .metric { flex-direction: row-reverse; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
   .metric__value { font-size: 18px; line-height: 24px; }
-  .float-card { padding: 10px 14px; gap: 2px; }
-  .float-card--tl { left: 12px; top: 12px; }
-  .float-card--br { right: 12px; bottom: 12px; }
-  .float-card__value { font-size: 20px; line-height: 24px; }
-  .float-card__label { font-size: 12px; }
 
   .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
   .pain { padding: 16px; gap: 16px; }
