@@ -4,6 +4,7 @@ import {
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
 import { Slot } from "@/components/Slot";
+import { DashboardMockup } from "@/components/DashboardMockup";
 import { AuditForm } from "@/components/AuditForm";
 import { CaseSlider } from "@/components/CaseSlider";
 
@@ -213,32 +214,7 @@ export default function Home() {
               <Cta />
             </div>
             <div className="dash__visual">
-              <Slot id="IMG-07" label="IMG-07 · 16:10 · 1600×1000" className="dash__bg" />
-              <div className="laptop">
-                <div className="laptop__screen">
-                  <div className="laptop__bar">
-                    <i /><i /><i />
-                    <span>robotism · {dashboard.note.toLowerCase()}</span>
-                  </div>
-                  <div className="ui-grid">
-                    <div className="ui-tile"><span>Соблюдение стандартов</span><b className="is-positive">98,4%</b></div>
-                    <div className="ui-tile"><span>Отклонений за сутки</span><b>14</b></div>
-                    <div className="ui-tile"><span>Заявок обработано AI</span><b>1 284</b></div>
-                    <div className="ui-tile ui-tile--wide">
-                      <span>Выручка по регионам</span>
-                      <div className="bars">
-                        {[38, 62, 48, 84, 56, 70, 44].map((h, i) => (
-                          <i key={i} style={{ height: `${h}%` }} className={i === 3 ? "is-hi" : ""} />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="ui-tile ui-tile--alert">
-                      <span>AI-алерт</span>
-                      <p>Точка №47: чек-лист открытия не выполнен 3 дня подряд</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <DashboardMockup label={`Дашборд собственника. ${dashboard.note}: выручка, соблюдение стандартов, отклонения и находки AI за ночь`} />
             </div>
           </div>
         </section>
