@@ -397,6 +397,7 @@ button, input, select { font-family: inherit; }
 
 /* Безопасность */
 .security { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.security__img.slot--img { background: #f6f4fc; }
 .security__left, .security__right { display: flex; flex-direction: column; gap: 24px; }
 .security__right { gap: 16px; }
 .security__points { display: flex; flex-direction: column; gap: 14px; }
@@ -644,6 +645,7 @@ button, input, select { font-family: inherit; }
 
   .security { grid-template-columns: 1fr; gap: 32px; }
   .security__img { aspect-ratio: 16 / 9; }
+  .security__img.slot--img img { object-fit: contain; }
   .security__points li { font-size: 16px; line-height: 24px; }
   /* На телефоне — полоса из двух бегущих лент: сверху технологии, снизу интеграции в обратную сторону */
   .security__right {

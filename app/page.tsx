@@ -264,7 +264,7 @@ export default function Home() {
           <div className="security">
             <div className="security__left">
               <h2 className="h2">Безопасность и интеграции</h2>
-              <Slot id="IMG-12" label="IMG-12 · 1:1" className="ratio-1-1 security__img" />
+              <Slot id="IMG-12" label="IMG-12 · 1:1" className="ratio-1-1 security__img" alt="Защищённый сервер в изолированном контуре: данные сети под защитой" />
               <ul className="security__points">
                 {security.points.map((p) => (
                   <li key={p.text} className={p.strong ? "is-strong" : ""}>
