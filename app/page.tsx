@@ -15,7 +15,7 @@ import { Cta, SiteHeader, SiteFooter } from "@/components/SiteChrome";
 
 function ProductCard({ p }: { p: Product }) {
   return (
-    <article className="card product">
+    <article className={`card product${p.modules ? " product--wide" : ""}`}>
       <div className="product__head">
         <div className="icon-tile">
           <Icon name={p.icon} stroke="#6D4AFF" />
@@ -155,7 +155,7 @@ export default function Home() {
           </div>
 
           <h3 className="subhead">Клиенты, продажи, репутация</h3>
-          <div className="products products--5">
+          <div className="products products--front">
             {frontOffice.map((p) => (
               <ProductCard key={p.title} p={p} />
             ))}
