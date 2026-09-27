@@ -33,7 +33,7 @@ export const images: Record<string, string | null> = {
   "IMG-13": null,
   "IMG-14": null,
   "IMG-15": null,
-  "IMG-16": null,
+  "IMG-16": "/images/final-network-bg.webp",
 };
 
 export const hero = {
