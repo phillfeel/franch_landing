@@ -386,6 +386,7 @@ button, input, select { font-family: inherit; }
 
 .band { background: var(--bg-soft); border-top: 1px solid var(--border); margin-top: var(--section); padding: var(--section) 0; }
 .offer { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+.offer__img.slot--img { background: #f5f3fb; }
 .offer__text { display: flex; flex-direction: column; gap: 28px; }
 .offer__list { display: flex; flex-direction: column; gap: 16px; }
 .offer__item { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; display: flex; gap: 18px; align-items: flex-start; }
@@ -640,6 +641,7 @@ button, input, select { font-family: inherit; }
 
   .offer { grid-template-columns: 1fr; gap: 28px; }
   .offer__img { aspect-ratio: 4 / 3; }
+  .offer__img.slot--img img { object-fit: contain; }
   .offer__text { gap: 20px; }
   .offer__list { gap: 10px; }
   .offer__item { padding: 16px 18px; gap: 14px; }

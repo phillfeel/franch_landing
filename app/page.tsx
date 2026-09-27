@@ -231,7 +231,7 @@ export default function Home() {
         {/* Оффер аудита */}
         <section className="band">
           <div className="container offer">
-            <Slot id="IMG-11" label="IMG-11 · 4:5" className="ratio-4-5 offer__img" />
+            <Slot id="IMG-11" label="IMG-11 · 4:5" className="ratio-4-5 offer__img" alt="Аудит сети: разбор данных, процессов и команды, дорожная карта внедрения AI" />
             <div className="offer__text">
               <h2 className="h2">{auditOffer.title}</h2>
               <ol className="offer__list">
