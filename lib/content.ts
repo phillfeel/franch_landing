@@ -24,7 +24,7 @@ export const images: Record<string, string | null> = {
   "IMG-01": "/images/hero-network.webp",
   "IMG-02": "/images/pain-no-visibility.webp",
   "IMG-03": "/images/pain-standards.webp",
-  "IMG-04": null,
+  "IMG-04": "/images/pain-onboarding.webp",
   "IMG-05": null,
   "IMG-06": null,
   "IMG-07": null,
