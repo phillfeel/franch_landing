@@ -125,7 +125,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hero__visual">
-            <Slot id="IMG-01" label="IMG-01 · 4:5 · 1000×1250" className="ratio-4-5" alt="Собственник сети смотрит на карту точек" />
+            <Slot id="IMG-01" label="IMG-01 · 4:5 · 1000×1250" className="ratio-4-5" alt="AI-ядро, связанное со всеми точками франчайзинговой сети" eager />
             <div className="float-card float-card--tl">
               <span className="float-card__label">Контроль стандартов</span>
               <span className="float-card__value is-positive">98,4%</span>

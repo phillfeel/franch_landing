@@ -21,7 +21,7 @@ export const nav = [
 
 // Слоты изображений из ТЗ. Чтобы вставить картинку, положите файл в public/images и укажите путь, например "/images/img-01.jpg".
 export const images: Record<string, string | null> = {
-  "IMG-01": null,
+  "IMG-01": "/images/hero-network.webp",
   "IMG-02": null,
   "IMG-03": null,
   "IMG-04": null,
