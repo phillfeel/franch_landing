@@ -32,7 +32,11 @@ npm run build    # статический сайт в out/
 - локально: `NEXT_PUBLIC_FORM_ENDPOINT=https://... npm run build`
 - на GitHub: Settings → Secrets and variables → Actions → Variables → `FORM_ENDPOINT`
 
-Тело запроса: `{ name, contact, company, points, goals[], utm{}, page }`. UTM-метки из QR-кодов мероприятий сохраняются автоматически.
+Формат рассчитан на [FormSubmit](https://formsubmit.co) (`https://formsubmit.co/ajax/<адрес или алиас>`), как на robotism.online.
+
+Тело запроса — плоский JSON: `{ name, contact, company, points, goals, page, utm_*, _subject, _template }`
+(`goals` — строка через запятую, `_`-поля служебные для FormSubmit). Если в ответе `success` не `true` — форма показывает ошибку.
+UTM-метки из QR-кодов мероприятий сохраняются автоматически.
 
 Ссылка на Telegram — переменная `TELEGRAM_URL` (по умолчанию `https://t.me/`).
 

@@ -43,15 +43,30 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
     if (next.name || next.contact || next.agree) return;
 
     setStatus("sending");
-    const payload = { name, contact, company, points, goals, utm: readUtm(), page: window.location.href };
+    // Плоские поля: FormSubmit (как на robotism.online) рисует письмо таблицей, вложенные массивы/объекты в ней не читаются.
+    // Поля с "_" — служебные для FormSubmit: тема письма и шаблон.
+    const payload = {
+      name,
+      contact,
+      company: company || "Не указана",
+      points,
+      goals: goals.join(", ") || "—",
+      page: window.location.href,
+      ...readUtm(),
+      _subject: `Новая заявка с лендинга для франшиз от ${name}`,
+      _template: "table",
+    };
     try {
       if (ENDPOINT) {
         const res = await fetch(ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error(String(res.status));
+        // FormSubmit отвечает 200 и при отказе (например, форма не активирована) — смотрим поле success.
+        const data = await res.json().catch(() => null);
+        if (data && "success" in data && String(data.success) !== "true") throw new Error(data.message);
       }
       setStatus("sent");
     } catch {
