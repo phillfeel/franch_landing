@@ -1,5 +1,5 @@
 import {
-  site, nav, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
+  site, hero, pains, scheme, frontOffice, backOffice, sopCopilot, dashboard,
   mainCase, auditOffer, steps, security, faq, finalCta, type Product,
 } from "@/lib/content";
 import { Icon } from "@/components/Icon";
@@ -8,26 +8,10 @@ import { DashboardMockup } from "@/components/DashboardMockup";
 import { AuditForm } from "@/components/AuditForm";
 import { CaseSlider } from "@/components/CaseSlider";
 import { DeckButton } from "@/components/DeckButton";
+import { Cta, SiteHeader, SiteFooter } from "@/components/SiteChrome";
 
 // Серверный компонент: вся разметка рендерится при сборке в статический HTML.
 // На клиенте гидратируются только форма (AuditForm), карусель кейса (CaseSlider) и презентация (DeckButton).
-
-function Logo() {
-  return (
-    <a href="#top" className="logo" aria-label="Robotism — на главную">
-      <span className="logo__mark" />
-      <span className="logo__text">{site.name}</span>
-    </a>
-  );
-}
-
-function Cta({ children = site.cta, className = "" }: { children?: React.ReactNode; className?: string }) {
-  return (
-    <a href="#audit" className={`btn btn--primary ${className}`}>
-      {children}
-    </a>
-  );
-}
 
 function ProductCard({ p }: { p: Product }) {
   return (
@@ -41,7 +25,23 @@ function ProductCard({ p }: { p: Product }) {
       <h3 className="h3">{p.title}</h3>
       {p.sub && <p className="product__sub">{p.sub}</p>}
       <p className="product__text">{p.text}</p>
+      {p.modules && (
+        <ul className="product__modules">
+          {p.modules.map((m) => (
+            <li key={m.code}>
+              <span className="product__code">{m.code}</span>
+              <span><b>{m.name}</b> — {m.text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {p.deck && <DeckButton label={p.deck.label} title={p.deck.title} />}
+      {p.more && (
+        <a href={p.more.href} className="product__more">
+          {p.more.label}
+          <Icon name="arrow" size={16} width={2} />
+        </a>
+      )}
       <span className="product__result">{p.result}</span>
     </article>
   );
@@ -80,31 +80,7 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <header className="header" id="top">
-        <div className="container header__inner">
-          <Logo />
-          <nav className="header__nav" aria-label="Основное меню">
-            {nav.map((n) => (
-              <a key={n.href} href={n.href}>{n.label}</a>
-            ))}
-          </nav>
-          <a href={site.telegram} className="icon-btn" aria-label="Написать в Telegram" target="_blank" rel="noopener">
-            <Icon name="telegram" size={18} />
-          </a>
-          <Cta className="btn--sm header__cta" />
-          <details className="burger">
-            <summary aria-label="Меню">
-              <span /><span />
-            </summary>
-            <nav className="burger__menu" aria-label="Мобильное меню">
-              {nav.map((n) => (
-                <a key={n.href} href={n.href}>{n.label}</a>
-              ))}
-              <Cta className="btn--block" />
-            </nav>
-          </details>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         {/* Hero */}
@@ -382,33 +358,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="container footer__grid">
-          <div className="footer__about">
-            <Logo />
-            <p>AI-интегратор для франчайзинговых и розничных сетей. Контроль, аналитика и обработка заявок поверх ваших систем.</p>
-            <p>{site.cities}</p>
-          </div>
-          <div className="footer__col">
-            <span className="footer__head">Разделы</span>
-            {nav.map((n) => (
-              <a key={n.href} href={n.href}>{n.label}</a>
-            ))}
-          </div>
-          <div className="footer__col">
-            <span className="footer__head">Контакты</span>
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-            <a href={site.telegram} target="_blank" rel="noopener">Telegram</a>
-            <a href="#audit" className="is-brand">{site.cta}</a>
-          </div>
-        </div>
-        <div className="footer__bottom">
-          <div className="container footer__bottom-inner">
-            <span>{site.legal}</span>
-            <a href="#">Политика конфиденциальности</a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import type { IconName } from "@/lib/content";
 
 // Линейные иконки в стиле Lucide (1.5px), без внешних зависимостей.
-const paths: Record<IconName | "telegram" | "check" | "shield", React.ReactNode> = {
+const paths: Record<IconName | "telegram" | "check" | "shield" | "pin" | "spark" | "arrow", React.ReactNode> = {
   content: (
     <>
       <rect x="3" y="4" width="18" height="16" rx="2" />
@@ -61,6 +61,14 @@ const paths: Record<IconName | "telegram" | "check" | "shield", React.ReactNode>
       <path d="m9 12 2 2 4-4" />
     </>
   ),
+  pin: (
+    <>
+      <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </>
+  ),
+  spark: <path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z" />,
+  arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
 };
 
 export function Icon({

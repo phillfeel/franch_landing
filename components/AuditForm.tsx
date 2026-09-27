@@ -17,12 +17,13 @@ function readUtm() {
   return utm;
 }
 
-export function AuditForm() {
+// initialGoals — цели, отмеченные заранее (на странице продукта — его направления).
+export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [company, setCompany] = useState("");
   const [points, setPoints] = useState(formOptions.points[0]);
-  const [goals, setGoals] = useState<string[]>([]);
+  const [goals, setGoals] = useState<string[]>(initialGoals);
   const [agree, setAgree] = useState(false);
   const [more, setMore] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
