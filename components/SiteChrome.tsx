@@ -2,6 +2,7 @@ import { site, nav } from "@/lib/content";
 import { Icon } from "./Icon";
 
 // Шапка и подвал общие для всех страниц. На внутренних страницах якоря меню ведут на главную ("/#solutions").
+// auditHref — куда ведёт кнопка заявки: на странице без своей формы — на форму главной ("/#audit").
 
 function navHref(href: string, home: boolean) {
   return home ? href : `/${href}`;
@@ -16,15 +17,23 @@ export function Logo({ home = true }: { home?: boolean }) {
   );
 }
 
-export function Cta({ children = site.cta, className = "" }: { children?: React.ReactNode; className?: string }) {
+export function Cta({
+  children = site.cta,
+  className = "",
+  href = "#audit",
+}: {
+  children?: React.ReactNode;
+  className?: string;
+  href?: string;
+}) {
   return (
-    <a href="#audit" className={`btn btn--primary ${className}`}>
+    <a href={href} className={`btn btn--primary ${className}`}>
       {children}
     </a>
   );
 }
 
-export function SiteHeader({ home = true }: { home?: boolean }) {
+export function SiteHeader({ home = true, auditHref }: { home?: boolean; auditHref?: string }) {
   return (
     <header className="header" id="top">
       <div className="container header__inner">
@@ -37,7 +46,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
         <a href={site.telegram} className="icon-btn" aria-label="Написать в Telegram" target="_blank" rel="noopener">
           <Icon name="telegram" size={18} />
         </a>
-        <Cta className="btn--sm header__cta" />
+        <Cta className="btn--sm header__cta" href={auditHref} />
         <details className="burger">
           <summary aria-label="Меню">
             <span /><span />
@@ -46,7 +55,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
             {nav.map((n) => (
               <a key={n.href} href={navHref(n.href, home)}>{n.label}</a>
             ))}
-            <Cta className="btn--block" />
+            <Cta className="btn--block" href={auditHref} />
           </nav>
         </details>
       </div>
@@ -54,7 +63,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
   );
 }
 
-export function SiteFooter({ home = true }: { home?: boolean }) {
+export function SiteFooter({ home = true, auditHref = "#audit" }: { home?: boolean; auditHref?: string }) {
   return (
     <footer className="footer">
       <div className="container footer__grid">
@@ -73,13 +82,16 @@ export function SiteFooter({ home = true }: { home?: boolean }) {
           <span className="footer__head">Контакты</span>
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <a href={site.telegram} target="_blank" rel="noopener">Telegram</a>
-          <a href="#audit" className="is-brand">{site.cta}</a>
+          <a href={auditHref} className="is-brand">{site.cta}</a>
         </div>
       </div>
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
-          <span>{site.legal}</span>
-          <a href="#">Политика конфиденциальности</a>
+          <span>© {site.name} · {site.operator.name} · ИНН {site.operator.inn}</span>
+          <nav className="footer__legal" aria-label="Документы">
+            <a href="/privacy/">Политика конфиденциальности</a>
+            <a href="/consent/">Согласие на обработку данных</a>
+          </nav>
         </div>
       </div>
     </footer>

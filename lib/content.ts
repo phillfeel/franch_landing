@@ -8,7 +8,12 @@ export const site = {
   email: "info@robotism.online",
   cities: "Москва | Челябинск",
   telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/",
-  legal: "ООО «Роботизм» · ИНН 0000000000 · ОГРН 0000000000000",
+  // Оператор персональных данных и реквизиты в подвале — те же, что в политике на robotism.online.
+  operator: {
+    name: "Индивидуальный предприниматель",
+    inn: "771379665218",
+    address: "Москва, ул. Тверская, 15",
+  },
   cta: "Получить разбор бизнес-процесса",
 };
 

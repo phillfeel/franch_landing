@@ -179,8 +179,9 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
       <label className="consent">
         <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
         <span>
-          Согласен на обработку персональных данных в соответствии с{" "}
-          <a href="#">политикой конфиденциальности</a> (152-ФЗ)
+          Даю{" "}
+          <a href="/consent/" target="_blank">согласие на обработку персональных данных</a> и принимаю{" "}
+          <a href="/privacy/" target="_blank">политику конфиденциальности</a>
         </span>
       </label>
       {errors.agree && <span className="field__error">Нужно согласие на обработку данных</span>}
