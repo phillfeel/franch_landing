@@ -207,6 +207,8 @@ button, input, select { font-family: inherit; }
 .dash { display: grid; grid-template-columns: .85fr 1.15fr; gap: 48px; align-items: center; }
 .dash > *, .case > *, .solution > *, .offer > *, .security > *, .final__inner > * { min-width: 0; }
 .dash__text { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+.dash__head { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.dash__note { margin-top: 12px; font: 400 13px/20px var(--font-sans); color: var(--text-3); text-align: center; }
 .dots { display: flex; flex-direction: column; gap: 20px; }
 .dots li { position: relative; padding-left: 22px; font: 500 17px/28px var(--font-sans); }
 .dots li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }

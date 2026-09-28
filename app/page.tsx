@@ -165,7 +165,10 @@ export default function Home() {
         <section className="container section">
           <div className="dash">
             <div className="dash__text">
-              <h2 className="h2">{dashboard.title}</h2>
+              <div className="dash__head">
+                <span className="pill pill--soft">{dashboard.tag}</span>
+                <h2 className="h2">{dashboard.title}</h2>
+              </div>
               <ul className="dots">
                 {dashboard.points.map((p) => (
                   <li key={p}>{p}</li>
@@ -175,6 +178,7 @@ export default function Home() {
             </div>
             <div className="dash__visual">
               <DashboardMockup label={`Дашборд собственника. ${dashboard.note}: выручка, соблюдение стандартов, отклонения и находки AI за ночь`} />
+              <p className="dash__note">{dashboard.note}</p>
             </div>
           </div>
         </section>
