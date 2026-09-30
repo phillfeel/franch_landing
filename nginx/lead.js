@@ -1,7 +1,21 @@
 // Приём заявки с формы: POST /api/lead с JSON { name, contact, company, points, goals, page, utm_* }.
 // Сообщение собирается здесь из известных полей и уходит в Telegram-бота.
-// Токен и чат — из окружения контейнера, в код страницы они не попадают.
+// Токен и чат: переменные окружения контейнера, иначе файлы, которые сборка кладёт из секретов GitHub.
+// В код страницы они не попадают.
 // Синтаксис — движок njs: без деструктуризации и for...of.
+
+import fs from "fs";
+
+var SECRETS_DIR = "/etc/nginx/telegram/";
+
+function setting(name) {
+  if (process.env[name]) return process.env[name];
+  try {
+    return fs.readFileSync(SECRETS_DIR + name.toLowerCase(), "utf8").trim();
+  } catch (e) {
+    return "";
+  }
+}
 
 var FIELDS = [
   ["name", "Имя"],
@@ -51,8 +65,8 @@ async function send(r) {
     return reply(r, 405, { ok: false, error: "method" });
   }
 
-  var token = process.env.TELEGRAM_BOT_TOKEN;
-  var chat = process.env.TELEGRAM_CHAT_ID;
+  var token = setting("TELEGRAM_BOT_TOKEN");
+  var chat = setting("TELEGRAM_CHAT_ID");
   if (!token || !chat) {
     r.error("lead: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not set");
     return reply(r, 503, { ok: false, error: "not configured" });

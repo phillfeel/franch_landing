@@ -33,6 +33,8 @@ Configure these Actions Secrets:
 DOCKERHUB_USERNAME
 DOCKERHUB_TOKEN
 DOKPLOY_FRANCH_WEBHOOK_URL
+TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID
 ```
 
 Configure these Actions Variables:
@@ -63,14 +65,14 @@ CPU limit: 0.10–0.15 CPU
 
 Authenticate the Docker Hub registry with a read-capable token. Add the production domain and enable HTTPS/Let's Encrypt. Create a deploy webhook and store its URL in `DOKPLOY_FRANCH_WEBHOOK_URL`.
 
-Public values are embedded during the GitHub Actions build. The lead form needs two runtime environment variables (Dokploy → Environment), they never reach the build or the page code:
+Public values are embedded during the GitHub Actions build. The lead form needs two values. They come from GitHub Actions Secrets `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` as BuildKit secrets and are stored as files in the image (never in the page code). Runtime environment variables with the same names (Dokploy → Environment) take precedence:
 
 ```text
 TELEGRAM_BOT_TOKEN=<token from @BotFather>
 TELEGRAM_CHAT_ID=<chat that receives leads>
 ```
 
-Without them `POST /api/lead` answers 503. Changing them needs only a container restart.
+Without them `POST /api/lead` answers 503.
 
 ## DNS
 

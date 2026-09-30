@@ -25,7 +25,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # Сначала собираем образ локально и проверяем nginx: сломанный конфиг не должен попасть в Dokploy.
+      # Сначала собираем образ без секретов и проверяем nginx: сломанный конфиг не должен попасть в Dokploy.
+      # Итоговый образ ниже отличается только файлами с токеном и чатом.
       - name: Build for smoke test
         uses: docker/build-push-action@v6
         with:
@@ -61,6 +62,10 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
+          # Токен бота и чат для заявок: попадают файлами в образ (см. Dockerfile), в код страницы — нет.
+          secrets: |
+            telegram_bot_token=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            telegram_chat_id=${{ secrets.TELEGRAM_CHAT_ID }}
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:main
@@ -68,6 +73,7 @@ jobs:
           build-args: |
             NEXT_PUBLIC_SITE_URL=${{ vars.SITE_URL }}
             NEXT_PUBLIC_TELEGRAM_URL=${{ vars.TELEGRAM_URL }}
+            SECRETS_REV=${{ github.run_id }}-${{ github.run_attempt }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Trigger Dokploy deploy
