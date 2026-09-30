@@ -516,6 +516,7 @@ button, input, select { font-family: inherit; }
 .footer__about { display: flex; flex-direction: column; gap: 14px; font: 400 15px/24px var(--font-sans); color: var(--text-2); }
 .footer__about p { max-width: 340px; }
 .footer__about .logo { margin-right: 0; }
+.footer__msu { width: 120px; height: auto; margin-top: 6px; filter: brightness(0); opacity: .55; }
 .footer__col { display: flex; flex-direction: column; gap: 10px; font: 500 15px/24px var(--font-sans); }
 .footer__col a { color: var(--text-2); }
 .footer__col a:hover { color: var(--text); }

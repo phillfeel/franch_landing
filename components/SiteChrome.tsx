@@ -71,6 +71,7 @@ export function SiteFooter({ home = true, auditHref = "#audit" }: { home?: boole
           <Logo home={home} />
           <p>AI-интегратор для франчайзинговых и розничных сетей. Контроль, аналитика и обработка заявок поверх ваших систем.</p>
           <p>{site.cities}</p>
+          <img className="footer__msu" src="/images/msu-logo.png" alt="Акселератор МГУ" width={349} height={125} loading="lazy" />
         </div>
         <div className="footer__col">
           <span className="footer__head">Разделы</span>
