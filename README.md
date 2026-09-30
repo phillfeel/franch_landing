@@ -31,7 +31,7 @@ npm run build    # статический сайт в out/
 к которой привязан ключ доступа. Ключ получают на web3forms.com, вписав почту для заявок, и задают при сборке:
 
 - локально: `NEXT_PUBLIC_WEB3FORMS_KEY=<ключ> npm run build`
-- на GitHub: Settings → Secrets and variables → Actions → Variables → `WEB3FORMS_KEY`
+- на GitHub: Settings → Secrets and variables → Actions → Secrets → `WEB3FORMS_KEY`
 
 Без ключа форма показывает ошибку отправки. Ключ публичный по замыслу Web3Forms (виден в коде страницы),
 в настройках Web3Forms можно разрешить только домен сайта.

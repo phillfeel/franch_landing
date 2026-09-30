@@ -35,17 +35,17 @@ Configure these Actions Secrets:
 DOCKERHUB_USERNAME
 DOCKERHUB_TOKEN
 DOKPLOY_FRANCH_WEBHOOK_URL
+WEB3FORMS_KEY
 ```
 
 Configure these Actions Variables:
 
 ```text
 SITE_URL
-WEB3FORMS_KEY
 TELEGRAM_URL
 ```
 
-`NEXT_PUBLIC_*` values are public by design and are compiled into the static HTML/JS. Never put credentials, API keys, or signing secrets into them.
+`NEXT_PUBLIC_*` values are public by design and are compiled into the static HTML/JS. Never put credentials, API keys, or signing secrets into them. The Web3Forms access key is the one exception: it is public by Web3Forms design and is stored as a secret only to keep it out of the repo.
 
 Each push to `main` publishes `latest`, `main`, and an immutable `sha-<full-git-sha>` tag.
 
