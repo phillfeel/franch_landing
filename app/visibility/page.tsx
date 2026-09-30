@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { site, visibility as v } from "@/lib/content";
 import { Icon } from "@/components/Icon";
-import { AuditForm } from "@/components/AuditForm";
 import { ReviewCalc } from "@/components/ReviewCalc";
-import { Cta, SiteHeader, SiteFooter } from "@/components/SiteChrome";
+import { Cta, Eyebrow, SiteHeader, SiteFooter } from "@/components/SiteChrome";
+import { AuditBlock, Faq, FinalForm, SectionHead, Steps } from "@/components/Sections";
 
 // Страница продукта «Видимость сети»: карточка на главной ведёт сюда по кнопке «Подробнее».
 
@@ -47,24 +47,23 @@ const jsonLd = {
 function HeroMock() {
   return (
     <div className="vis-mock" role="img" aria-label="Пример: нейросеть рекомендует точку сети, карточка на картах с рейтингом 4,9, ответ на отзыв опубликован за 2 минуты">
-      <div className="vis-mock__chat">
-        <span className="vis-mock__label"><Icon name="spark" size={14} stroke="#6D4AFF" width={2} /> Ответ нейросети</span>
+      <div className="vis-mock__card vis-mock__chat">
+        <span className="vis-mock__label">Ответ нейросети</span>
         <p className="vis-mock__q">Где поужинать с детьми рядом с Арбатской?</p>
         <p className="vis-mock__a">
           Посмотрите <mark>«Вашу сеть»</mark> на Арбате, 12: рейтинг 4,9, детское меню и игровая зона. Гости отмечают быстрое обслуживание.
         </p>
       </div>
-      <div className="vis-mock__map">
-        <div className="vis-mock__pin"><Icon name="pin" size={20} stroke="#fff" width={2} /></div>
+      <div className="vis-mock__card vis-mock__map">
+        <span className="vis-mock__pin"><Icon name="pin" size={18} stroke="#F2F3F4" width={2} /></span>
         <div>
           <b>Ваша сеть · Арбат, 12</b>
-          <span><span className="vis-mock__stars">★ 4,9</span> · 1 284 отзыва · открыто до 23:00</span>
+          <span className="mono">★ 4,9 · 1 284 отзыва · до 23:00</span>
         </div>
       </div>
-      <div className="vis-mock__reply">
-        <span className="vis-mock__dot" />
-        Ответ на отзыв опубликован
-        <span className="vis-mock__time">2 мин</span>
+      <div className="vis-mock__card vis-mock__reply">
+        <span className="with-dot"><span className="dot dot--pulse" />Ответ на отзыв опубликован</span>
+        <span className="mono">2 мин</span>
       </div>
       <span className="vis-mock__note">пример</span>
     </div>
@@ -78,91 +77,93 @@ export default function VisibilityPage() {
       <SiteHeader home={false} />
 
       <main>
-        {/* Hero */}
-        <section className="container hero vis-hero">
+        {/* Первый экран */}
+        <section className="container hero">
           <div className="hero__text">
-            <a href="/#solutions" className="vis-back">← Все решения</a>
-            <span className="pill pill--soft pill--dot">{v.hero.badge}</span>
-            <h1 className="h1">{v.hero.title}</h1>
+            <a href="/#solutions" className="back">← Все решения</a>
+            <Eyebrow>{v.hero.badge}</Eyebrow>
+            <h1 className="h1 h1--md">{v.hero.title}</h1>
             <p className="lead">{v.hero.lead}</p>
             <div className="btn-row">
               <Cta>Получить аудит видимости</Cta>
-              <a href="#modules" className="btn btn--secondary">Что входит</a>
+              <Cta href="#modules" variant="outline">Что входит</Cta>
             </div>
-            <div className="hero__metrics">
+            <div className="metrics">
               {v.hero.metrics.map((m) => (
                 <div key={m.label} className="metric">
-                  <span className={`metric__value${m.positive ? " is-positive" : ""}`}>{m.value}</span>
+                  <span className="metric__value">{m.value}</span>
                   <span className="metric__label">{m.label}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="hero__visual">
-            <HeroMock />
-          </div>
+          <HeroMock />
         </section>
 
         {/* Боли */}
-        <section className="container section vis-first">
-          <h2 className="h2 section__title">{v.pains.title}</h2>
-          <div className="grid-2">
-            {v.pains.items.map((p) => (
-              <article key={p.text} className="card vis-pain">
-                <div className="icon-tile">
-                  <Icon name={p.icon} stroke="#6D4AFF" />
-                </div>
-                <p>{p.text}</p>
-              </article>
-            ))}
-          </div>
-          <div className="callout">
-            <p>Каждый такой клиент уже был вашим. Его не нужно привлекать рекламой — достаточно не отдать конкуренту.</p>
-            <Cta>Проверить свою сеть</Cta>
+        <section className="container section split">
+          <SectionHead eyebrow="Диагностика" title={v.pains.title} />
+          <div>
+            <ul className="problems problems--icons">
+              {v.pains.items.map((p) => (
+                <li key={p.text}>
+                  <span className="icon-box"><Icon name={p.icon} size={20} stroke="#1B2027" /></span>
+                  <span>{p.text}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="panel callout">
+              <div className="callout__wire" aria-hidden="true"><span /><i /></div>
+              <p>Каждый такой клиент уже был вашим. Его не нужно привлекать рекламой — достаточно не отдать конкуренту.</p>
+              <Cta>Проверить свою сеть</Cta>
+            </div>
           </div>
         </section>
 
         {/* Модули */}
         <section id="modules" className="container section anchor">
-          <h2 className="h2">Четыре продукта в одной системе</h2>
-          <p className="lead section__lead">
-            Каждый модуль работает самостоятельно — можно начать с одного. Вместе они закрывают весь путь клиента: от первого вопроса до двери точки.
-          </p>
-          <nav className="vis-tabs" aria-label="Модули">
+          <SectionHead
+            eyebrow="Что входит"
+            title="Четыре продукта в одной системе"
+            lead="Каждый модуль работает самостоятельно — можно начать с одного. Вместе они закрывают весь путь клиента: от первого вопроса до двери точки."
+            className="section-head--wide"
+          />
+          <nav className="tags vis-tabs" aria-label="Модули">
             {v.modules.map((m) => (
-              <a key={m.id} href={`#${m.id}`} className="vis-tab">
-                <span className="product__code">{m.code}</span>
-                {m.name}
+              <a key={m.id} href={`#${m.id}`} className="tag tag--lg tag--link">
+                <b>{m.code}</b> {m.name}
               </a>
             ))}
           </nav>
           <div className="vis-modules">
             {v.modules.map((m, i) => (
-              <article key={m.id} id={m.id} className="card vis-module anchor">
+              <article key={m.id} id={m.id} className="vis-module anchor">
                 <div className="vis-module__info">
-                  <div className="vis-module__head">
-                    <div className="icon-tile">
-                      <Icon name={m.icon} stroke="#6D4AFF" />
-                    </div>
-                    <span className="mono-num">{String(i + 1).padStart(2, "0")} / {m.code} · {m.name}</span>
-                  </div>
+                  <span className="vis-module__code">
+                    <span className="icon-box"><Icon name={m.icon} size={20} stroke="#1B2027" /></span>
+                    {String(i + 1).padStart(2, "0")} · {m.code} · {m.name}
+                  </span>
                   <h3 className="vis-module__title">{m.title}</h3>
                   <p className="vis-module__lead">{m.lead}</p>
-                  <ul className="vis-where" aria-label="Площадки">
+                  <div className="tags" aria-label="Площадки">
                     {m.where.map((w) => (
-                      <li key={w}>{w}</li>
+                      <span key={w} className="tag tag--mono">{w}</span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
-                <div className="vis-module__body">
-                  <span className="eyebrow">Что делаем</span>
-                  <ul className="case__points">
+                <div className="panel vis-module__body">
+                  <span className="stack__label">Что делаем</span>
+                  <ul className="checklist checklist--compact">
                     {m.does.map((d) => (
-                      <li key={d}>{d}</li>
+                      <li key={d}>
+                        <span className="checkbox" aria-hidden="true" />
+                        {d}
+                      </li>
                     ))}
                   </ul>
                   <p className="vis-saving">
-                    <b>Экономия.</b> {m.saving}
+                    <span className="dot" aria-hidden="true" />
+                    <span><b>Экономия.</b> {m.saving}</span>
                   </p>
                 </div>
               </article>
@@ -172,29 +173,28 @@ export default function VisibilityPage() {
 
         {/* Синергия */}
         <section className="container section">
-          <h2 className="h2">{v.synergy.title}</h2>
-          <p className="lead section__lead">{v.synergy.lead}</p>
-          <div className="vis-flow">
-            <div className="vis-flow__box">
-              <span className="eyebrow">{v.synergy.source.title}</span>
+          <SectionHead eyebrow="Одна система" title={v.synergy.title} lead={v.synergy.lead} className="section-head--wide" />
+          <div className="flow">
+            <div className="panel flow__box">
+              <span className="stack__label">{v.synergy.source.title}</span>
               <ul>
                 {v.synergy.source.items.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
               </ul>
             </div>
-            <div className="vis-flow__arrow" aria-hidden="true" />
-            <div className="vis-flow__core">
+            <div className="flow__wire" aria-hidden="true"><span /></div>
+            <div className="flow__core">
               {v.modules.map((m) => (
-                <div key={m.id} className="vis-flow__ch">
-                  <span className="product__code">{m.code}</span>
+                <div key={m.id} className="flow__ch">
+                  <b>{m.code}</b>
                   {m.name}
                 </div>
               ))}
             </div>
-            <div className="vis-flow__arrow" aria-hidden="true" />
-            <div className="vis-flow__box is-accent">
-              <span className="eyebrow">{v.synergy.result.title}</span>
+            <div className="flow__wire" aria-hidden="true"><span /></div>
+            <div className="panel flow__box is-accent">
+              <span className="stack__label">{v.synergy.result.title}</span>
               <ul>
                 {v.synergy.result.items.map((t) => (
                   <li key={t}>{t}</li>
@@ -202,8 +202,8 @@ export default function VisibilityPage() {
               </ul>
             </div>
           </div>
-          <div className="grid-2 vis-compare">
-            <div className="card vis-compare__col is-before">
+          <div className="compare">
+            <div className="compare__col is-before">
               <h3 className="h3">{v.synergy.before.title}</h3>
               <ul>
                 {v.synergy.before.items.map((t) => (
@@ -211,9 +211,9 @@ export default function VisibilityPage() {
                 ))}
               </ul>
             </div>
-            <div className="card vis-compare__col is-after">
+            <div className="compare__col is-after">
               <h3 className="h3">{v.synergy.after.title}</h3>
-              <ul className="case__points">
+              <ul>
                 {v.synergy.after.items.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
@@ -223,92 +223,28 @@ export default function VisibilityPage() {
         </section>
 
         {/* Экономия */}
-        <section className="band">
-          <div className="container">
-            <h2 className="h2 section__title">{v.savings.title}</h2>
-            <div className="vis-savings">
-              {v.savings.items.map((s, i) => (
-                <article key={s.title} className="card vis-save">
-                  <span className="mono-num is-brand">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="vis-save__title">{s.title}</h3>
-                  <p>{s.text}</p>
-                </article>
-              ))}
-            </div>
-            <h3 className="subhead">Посчитайте сами: время на отзывы</h3>
-            <ReviewCalc />
-          </div>
-        </section>
-
-        {/* Процесс */}
         <section className="container section">
-          <h2 className="h2 section__title">Как запускаем</h2>
-          <ol className="timeline">
-            {v.steps.map((s, i) => (
-              <li key={s.n} className={`step${i === 0 ? " is-current" : ""}`}>
-                <span className="mono-num">{s.n}</span>
-                <h3 className="step__title">{s.title}</h3>
-                {i === 0 ? <span className="step__here">Вы здесь</span> : <p className="step__text">{s.text}</p>}
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* Оффер аудита */}
-        <section className="container section">
-          <div className="card vis-audit">
-            <h2 className="h2">{v.audit.title}</h2>
-            <ol className="offer__list">
-              {v.audit.items.map((it, i) => (
-                <li key={it} className="offer__item">
-                  <span className="mono-num is-brand">{String(i + 1).padStart(2, "0")}</span>
-                  <p>{it}</p>
-                </li>
-              ))}
-            </ol>
-            <div className="offer__cta">
-              <span className="pill pill--soft pill--lg">{v.audit.badge}</span>
-              <Cta>Записаться на аудит</Cta>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="container section">
-          <h2 className="h2 section__title">Частые вопросы</h2>
-          <div className="faq">
-            {v.faq.map((f) => (
-              <details key={f.q} className="faq__item">
-                <summary>
-                  {f.q}
-                  <span className="faq__plus" aria-hidden="true">+</span>
-                </summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        {/* Финальная форма */}
-        <section id="audit" className="final anchor">
-          <div className="final__box">
-            <div className="final__glow" />
-            <div className="final__inner">
-              <div className="final__text">
-                <h2 className="h2">{v.finalCta.title}</h2>
-                <ul className="final__points">
-                  {v.finalCta.points.map((p) => (
-                    <li key={p}>
-                      <Icon name="check" size={20} stroke="#A99BFF" width={2} />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
+          <SectionHead eyebrow="Бюджет" title={v.savings.title} className="section-head--wide" />
+          <div className="security">
+            {v.savings.items.map((s, i) => (
+              <div key={s.title} className="security__item">
+                <span className="mono muted">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="security__title">{s.title}</h3>
+                <p>{s.text}</p>
               </div>
-              <AuditForm initialGoals={v.formGoals} />
-            </div>
+            ))}
           </div>
+          <h3 className="subhead">Посчитайте сами: время на отзывы</h3>
+          <ReviewCalc />
         </section>
+
+        <Steps eyebrow="Маршрут внедрения" title="Как запускаем" items={v.steps} cta={false} />
+
+        <AuditBlock {...v.audit} />
+
+        <Faq items={v.faq} group="vis-faq" />
+
+        <FinalForm title={v.finalCta.title} points={v.finalCta.points} initialGoals={v.formGoals} />
       </main>
 
       <SiteFooter home={false} />

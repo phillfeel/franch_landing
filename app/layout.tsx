@@ -1,14 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, IBM_Plex_Mono, Onest } from "next/font/google";
+import { Geologica, Golos_Text, IBM_Plex_Mono } from "next/font/google";
 import { site } from "@/lib/content";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robotism.online";
 
 // Шрифты скачиваются на этапе сборки и отдаются с того же домена — без запросов к Google у посетителя.
-const manrope = Manrope({
+// Geologica — заголовки и цифры, Golos Text — основной текст, IBM Plex Mono — подписи и данные в интерфейсах.
+const geologica = Geologica({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600"],
+  variable: "--font-display",
+  display: "swap",
+});
+const golos = Golos_Text({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -17,14 +24,6 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
-});
-// Шрифт слайдов презентации кейса: без preload — файлы качаются, только когда презентацию открыли.
-const onest = Onest({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-deck",
-  display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -46,12 +45,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#6D4AFF",
+  themeColor: "#F2F3F4",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${manrope.variable} ${plexMono.variable} ${onest.variable}`}>
+    <html lang="ru" className={`${geologica.variable} ${golos.variable} ${plexMono.variable}`}>
       <body>{children}</body>
     </html>
   );

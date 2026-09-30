@@ -1,59 +1,17 @@
 import {
-  site, hero, pains, scheme, frontOffice, backOffice, dashboard,
-  mainCase, auditOffer, steps, security, faq, finalCta, type Product,
+  site, hero, problems, layers, modules, dashboard, mainCase, auditOffer, steps, security, faq, finalCta,
 } from "@/lib/content";
-import { Icon } from "@/components/Icon";
-import { Slot } from "@/components/Slot";
+import { HeroNetwork } from "@/components/HeroNetwork";
+import { ModuleMock } from "@/components/ModuleMock";
+import { Ribbon } from "@/components/Ribbon";
 import { DashboardMockup } from "@/components/DashboardMockup";
-import { AuditForm } from "@/components/AuditForm";
 import { CaseSlider } from "@/components/CaseSlider";
 import { DeckButton } from "@/components/DeckButton";
 import { Cta, SiteHeader, SiteFooter } from "@/components/SiteChrome";
+import { AuditBlock, Faq, FinalForm, SectionHead, Steps } from "@/components/Sections";
 
 // Серверный компонент: вся разметка рендерится при сборке в статический HTML.
-// На клиенте гидратируются только форма (AuditForm), карусель кейса (CaseSlider) и презентация (DeckButton).
-
-function ProductCard({ p }: { p: Product }) {
-  return (
-    <article className={`card product${p.modules ? " product--wide" : ""}`}>
-      <div className="product__head">
-        <div className="icon-tile">
-          <Icon name={p.icon} stroke="#6D4AFF" />
-        </div>
-        {p.tag && <span className="pill pill--soft">{p.tag}</span>}
-      </div>
-      <h3 className="h3">{p.title}</h3>
-      {p.sub && <p className="product__sub">{p.sub}</p>}
-      <p className="product__text">{p.text}</p>
-      {p.modules && (
-        <ul className="product__modules">
-          {p.modules.map((m) => (
-            <li key={m.code}>
-              <span className="product__code">{m.code}</span>
-              <span><b>{m.name}</b> — {m.text}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {p.deck && <DeckButton label={p.deck.label} title={p.deck.title} />}
-      {p.more && (
-        <a href={p.more.href} className="product__more">
-          {p.more.label}
-          <Icon name="arrow" size={16} width={2} />
-        </a>
-      )}
-      {p.note && <p className="product__note">{p.note}</p>}
-      <span className="product__result">{p.result}</span>
-    </article>
-  );
-}
-
-// Центры ячеек по периметру сетки 4×4 (в % от схемы): сюда тянутся «провода» от AI-ядра в центре.
-const hubCells: [number, number][] = [12.5, 37.5, 62.5, 87.5].flatMap((y, r) =>
-  [12.5, 37.5, 62.5, 87.5]
-    .filter((_, c) => r === 0 || r === 3 || c === 0 || c === 3)
-    .map((x): [number, number] => [x, y]),
-);
+// На клиенте гидратируются только меню, лента модулей, дашборд, скриншоты кейса, презентация и форма.
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -76,6 +34,12 @@ const jsonLd = {
   ],
 };
 
+// Звуковая «волна» звонка под метриками кейса: три участка — квалификация, возражения, закрытие.
+const wave = Array.from({ length: 64 }, (_, i) => {
+  const h = 18 + Math.abs(Math.sin(i * 0.7) * 50 + Math.sin(i * 2.3) * 22 + Math.cos(i * 0.21) * 12);
+  return { h: Math.min(100, Math.round(h)), part: i < 21 ? 0 : i < 43 ? 1 : 2 };
+});
+
 export default function Home() {
   return (
     <>
@@ -84,267 +48,206 @@ export default function Home() {
       <SiteHeader />
 
       <main>
-        {/* Hero */}
+        {/* Первый экран */}
         <section className="container hero">
           <div className="hero__text">
-            <span className="pill pill--soft pill--dot">{hero.badge}</span>
             <h1 className="h1">{hero.title}</h1>
             <p className="lead">{hero.lead}</p>
             <div className="btn-row">
               <Cta />
-              <a href="#cases" className="btn btn--secondary">Смотреть кейс</a>
+              <Cta href="#cases" variant="outline">Смотреть кейс</Cta>
             </div>
-            <p className="caption">{hero.micro}</p>
-            <div className="hero__metrics">
+            <div className="metrics">
               {hero.metrics.map((m) => (
                 <div key={m.label} className="metric">
-                  <span className={`metric__value${m.positive ? " is-positive" : ""}`}>{m.value}</span>
+                  <span className="metric__value">{m.value}</span>
                   <span className="metric__label">{m.label}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="hero__visual">
-            <Slot id="IMG-01" label="IMG-01 · 4:5 · 1000×1250" className="ratio-4-5" alt="AI-ядро, связанное со всеми точками франчайзинговой сети" eager />
-          </div>
+          <HeroNetwork />
         </section>
 
         {/* Боли */}
-        <section className="container section">
-          <h2 className="h2">Узнаёте свою сеть?</h2>
-          <p className="lead section__lead">Четыре ситуации, которые повторяются в каждой растущей сети.</p>
-          <div className="grid-2">
-            {pains.map((p) => (
-              <article key={p.img} className="card pain">
-                <Slot id={p.img} label={`${p.img} · 1:1`} className="pain__img" />
-                <h3 className="h3">{p.title}</h3>
-              </article>
-            ))}
-          </div>
-          <div className="callout">
-            <p>Каждая новая точка требует ещё людей в управляющей компании. AI ломает эту зависимость.</p>
-            <Cta />
+        <section className="container section split">
+          <SectionHead eyebrow={problems.eyebrow} title={problems.title} />
+          <div>
+            <ul className="problems">
+              {problems.items.map((p) => (
+                <li key={p}>
+                  <svg viewBox="0 0 72 12" aria-hidden="true">
+                    <line x1="0" y1="6" x2="28" y2="6" className="problems__solid" />
+                    <line x1="44" y1="6" x2="72" y2="6" className="problems__broken" />
+                    <rect x="30" y="2" width="8" height="8" rx="2" />
+                  </svg>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="panel callout">
+              <div className="callout__wire" aria-hidden="true"><span /><i /></div>
+              <p>{problems.callout}</p>
+              <Cta />
+            </div>
           </div>
         </section>
 
-        {/* Решение */}
+        {/* Как устроено */}
         <section id="solutions" className="container section anchor">
-          <h2 className="h2 section__title">Сквозная AI-инфраструктура сети</h2>
-          <div className="solution">
-            <div className="scheme">
-              {scheme.map((s, i) => (
-                <div key={s.n} className="scheme__item-wrap">
-                  {i > 0 && <div className="scheme__line" />}
-                  <div className={`scheme__item${s.dark ? " is-dark" : ""}${s.accent ? " is-accent" : ""}`}>
-                    <span className="mono-num">{s.n}</span>
-                    <span className="scheme__title">{s.title}</span>
-                    <span className="scheme__text">{s.text}</span>
+          <SectionHead eyebrow={layers.eyebrow} title={layers.title} className="section-head--wide" />
+          <ol className="layers">
+            {layers.items.map((l) => (
+              <li key={l.name} className={`layer${l.accent ? " is-accent" : ""}${l.dark ? " is-dark" : ""}`}>
+                <div className="layer__rail" aria-hidden="true">
+                  <span className="layer__node"><i /></span>
+                  <span className="layer__wire" />
+                </div>
+                <div className="layer__body">
+                  <div className="layer__text">
+                    <h3 className="h3">{l.name}</h3>
+                    <p>{l.note}</p>
+                  </div>
+                  <div className="tags">
+                    {l.items.map((it) => (
+                      <span key={it} className="tag tag--mono">{it}</span>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-            <Slot id="IMG-06" label="IMG-06 · 16:9 · 1600×900" className="solution__img" alt="Данные точек сети через сбор данных и AI-ядро попадают на дашборд собственника" />
-          </div>
-
-          <h3 className="subhead">Клиенты, продажи, репутация</h3>
-          <div className="products products--front">
-            {frontOffice.map((p) => (
-              <ProductCard key={p.title} p={p} />
+              </li>
             ))}
-          </div>
+          </ol>
+        </section>
 
-          <h3 className="subhead">Управление сетью</h3>
-          <div className="products products--3">
-            {backOffice.map((p) => (
-              <ProductCard key={p.title} p={p} />
+        {/* Модули */}
+        <section className="section section--flush">
+          <Ribbon
+            label="Модули"
+            head={<SectionHead eyebrow={modules.eyebrow} title={modules.title} lead={modules.lead} className="section-head--wide" />}
+          >
+            {modules.items.map((m) => (
+              <article
+                key={m.id}
+                className={`mod${m.pilot ? " is-pilot" : ""}${m.id === "bot" ? " is-live" : ""}`}
+                style={{ "--w": `${m.width}px` } as React.CSSProperties}
+              >
+                <div className="mod__card">
+                  <span className="mod__group">{m.group}</span>
+                  <h3 className="mod__title">{m.title}</h3>
+                  <ModuleMock id={m.id} />
+                  <p className="mod__text">{m.text}</p>
+                  {m.deck && <DeckButton label={m.deck.label} title={m.deck.title} />}
+                  {m.more && (
+                    <a href={m.more.href} className="link-arrow">
+                      {m.more.label} <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                  <span className="mod__result">{m.result}</span>
+                </div>
+                <span className="mod__stem" aria-hidden="true" />
+                <span className="mod__node" aria-hidden="true" />
+              </article>
             ))}
-          </div>
+          </Ribbon>
+          <p className="container note">{modules.note}</p>
         </section>
 
         {/* Дашборд */}
         <section className="container section">
-          <div className="dash">
-            <div className="dash__text">
-              <div className="dash__head">
-                <span className="pill pill--soft">{dashboard.tag}</span>
-                <h2 className="h2">{dashboard.title}</h2>
-              </div>
-              <ul className="dots">
-                {dashboard.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-              <Cta />
+          <SectionHead eyebrow={dashboard.eyebrow} title={dashboard.title} className="section-head--wide" />
+          <DashboardMockup />
+          <p className="note">{dashboard.note}</p>
+        </section>
+
+        {/* Кейс */}
+        <section id="cases" className="dark anchor">
+          <div className="container section case">
+            <div className="case__head">
+              <SectionHead eyebrow={mainCase.eyebrow} title={mainCase.title} />
+              <p className="lead">{mainCase.lead}</p>
             </div>
-            <div className="dash__visual">
-              <DashboardMockup label={`Дашборд собственника. ${dashboard.note}: выручка, соблюдение стандартов, отклонения и находки AI за ночь`} />
-              <p className="dash__note">{dashboard.note}</p>
+            <div className="case__metrics">
+              {mainCase.metrics.map((m, i) => (
+                <div key={m.label} className="case__metric">
+                  <span className="case__from">{m.from}</span>
+                  <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+                    <line x1="0" y1="5" x2="100" y2="5" className="case__track" />
+                    <line x1="0" y1="5" x2="100" y2="5" pathLength={100} className="case__signal" style={{ animationDelay: `${i * 1.5}s` }} />
+                  </svg>
+                  <span className="case__to">
+                    <b>{m.to}</b>
+                    <span>{m.label}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="case__body">
+              <div className="case__info">
+                <div className="wave" aria-hidden="true">
+                  {wave.map((b, i) => (
+                    <span key={i} className={`wave__bar wave__bar--${b.part}`} style={{ height: `${b.h}%` }} />
+                  ))}
+                </div>
+                <div className="wave__labels" aria-hidden="true">
+                  <span>квалификация</span>
+                  <span>возражения</span>
+                  <span>закрытие</span>
+                </div>
+                <ul className="case__points">
+                  {mainCase.points.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+                <Cta variant="accent">{mainCase.cta}</Cta>
+              </div>
+              <CaseSlider slides={mainCase.slides} />
             </div>
           </div>
         </section>
 
-        {/* Кейсы */}
-        <section id="cases" className="container section anchor">
-          <h2 className="h2 section__title">Результаты, а не обещания</h2>
-          <article className="card case">
-            <div className="case__info">
-              <span className="pill pill--soft">{mainCase.tag}</span>
-              <h3 className="case__title">{mainCase.title}</h3>
-              <p className="case__lead">{mainCase.lead}</p>
-              <div className="case__metrics">
-                {mainCase.metrics.map((m) => (
-                  <div key={m.label} className="case__metric">
-                    <span className="case__metric-value">
-                      {m.from} → <span className="is-positive">{m.to}</span>
-                    </span>
-                    <span className="metric__label">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-              <ul className="case__points">
-                {mainCase.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </div>
-            <CaseSlider slides={mainCase.slides} />
-          </article>
-          <div className="center">
-            <Cta>Хочу такой же результат — получить аудит</Cta>
-          </div>
-        </section>
+        <AuditBlock {...auditOffer} />
 
-        {/* Оффер аудита */}
-        <section className="band">
-          <div className="container offer">
-            <Slot id="IMG-11" label="IMG-11 · 4:5" className="ratio-4-5 offer__img" alt="Аудит сети: разбор данных, процессов и команды, дорожная карта внедрения AI" />
-            <div className="offer__text">
-              <h2 className="h2">{auditOffer.title}</h2>
-              <ol className="offer__list">
-                {auditOffer.items.map((it, i) => (
-                  <li key={it} className="offer__item">
-                    <span className="mono-num is-brand">{String(i + 1).padStart(2, "0")}</span>
-                    <p>{it}</p>
-                  </li>
-                ))}
-              </ol>
-              <div className="offer__cta">
-                <span className="pill pill--soft pill--lg">{auditOffer.badge}</span>
-                <Cta>Записаться на аудит</Cta>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Процесс */}
-        <section id="process" className="container section anchor">
-          <h2 className="h2 section__title">Как мы работаем</h2>
-          <ol className="timeline">
-            {steps.map((s, i) => (
-              <li key={s.n} className={`step${i === 0 ? " is-current" : ""}`}>
-                <span className="mono-num">{s.n}</span>
-                <h3 className="step__title">{s.title}</h3>
-                {i === 0 ? <span className="step__here">Вы здесь</span> : <p className="step__text">{s.text}</p>}
-              </li>
-            ))}
-          </ol>
-          <div className="note-bar">
-            <p>Начинаем с пилота на 1–3 процессах с понятными метриками. Без риска для бизнеса.</p>
-            <Cta />
-          </div>
-        </section>
+        <Steps id="process" {...steps} />
 
         {/* Безопасность */}
         <section className="container section">
+          <SectionHead eyebrow={security.eyebrow} title={security.title} className="section-head--wide" />
           <div className="security">
-            <div className="security__left">
-              <h2 className="h2">Безопасность и интеграции</h2>
-              <Slot id="IMG-12" label="IMG-12 · 1:1" className="ratio-1-1 security__img" alt="Защищённый сервер в изолированном контуре: данные сети под защитой" />
-              <ul className="security__points">
-                {security.points.map((p) => (
-                  <li key={p.text} className={p.strong ? "is-strong" : ""}>
-                    <Icon name="shield" size={20} stroke="#6D4AFF" />
-                    {p.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="security__right">
-              <span className="eyebrow">Технологии и интеграции</span>
-              <div className="hub">
-                <svg className="hub__wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                  {hubCells.map(([x, y]) => (
-                    <line key={`${x}-${y}`} x1={x} y1={y} x2={50} y2={50} />
-                  ))}
-                </svg>
-                <div className="hub__core">
-                  <span className="hub__label">AI-ядро · технологии</span>
-                  <ul className="hub__tech">
-                    {security.tech.map((t) => (
-                      <li key={t}>{t}</li>
-                    ))}
-                    {security.tech.map((t) => (
-                      <li key={`d${t}`} className="hub__tech-dup" aria-hidden="true">{t}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="hub__ring">
-                  <div className="hub__track">
-                    {security.integrations.map((t) => (
-                      <div key={t} className="integration">{t}</div>
-                    ))}
-                    <div className="integration integration--more">+ ваши</div>
-                    {security.integrations.map((t) => (
-                      <div key={`d${t}`} className="integration integration--dup" aria-hidden="true">{t}</div>
-                    ))}
-                    <div className="integration integration--more integration--dup" aria-hidden="true">+ ваши</div>
-                  </div>
-                </div>
+            {security.points.map((p) => (
+              <div key={p.title} className="security__item">
+                <h3 className="security__title">{p.title}</h3>
+                <p>{p.text}</p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" className="container section anchor">
-          <h2 className="h2 section__title">Частые вопросы</h2>
-          <div className="faq">
-            {faq.map((f) => (
-              <details key={f.q} className="faq__item">
-                <summary>
-                  {f.q}
-                  <span className="faq__plus" aria-hidden="true">+</span>
-                </summary>
-                <p>{f.a}</p>
-              </details>
             ))}
           </div>
-        </section>
-
-        {/* Финальная форма */}
-        <section id="audit" className="final anchor">
-          <div className="final__box">
-            <Slot id="IMG-16" label="IMG-16 · 16:9 · фон 20%" className="final__bg" />
-            <div className="final__glow" />
-            <div className="final__inner">
-              <div className="final__text">
-                <h2 className="h2">{finalCta.title}</h2>
-                <ul className="final__points">
-                  {finalCta.points.map((p) => (
-                    <li key={p}>
-                      <Icon name="check" size={20} stroke="#A99BFF" width={2} />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
+          <div className="stack">
+            <div className="panel stack__box">
+              <span className="stack__label">AI-ядро</span>
+              <div className="tags">
+                {security.tech.map((t) => (
+                  <span key={t} className="tag tag--lg">{t}</span>
+                ))}
               </div>
-              <AuditForm />
+            </div>
+            <div className="panel stack__box">
+              <span className="stack__label">Интеграции</span>
+              <div className="tags">
+                {security.integrations.map((t) => (
+                  <span key={t} className="tag tag--lg">{t}</span>
+                ))}
+                <span className="tag tag--lg tag--more"><span className="dot" aria-hidden="true" />+ ваши</span>
+              </div>
             </div>
           </div>
         </section>
+
+        <Faq id="faq" items={faq} group="faq" />
+
+        <FinalForm {...finalCta} />
       </main>
 
       <SiteFooter />
     </>
   );
 }
+

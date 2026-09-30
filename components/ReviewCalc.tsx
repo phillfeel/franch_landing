@@ -19,7 +19,7 @@ export function ReviewCalc() {
   const savedRub = (manualHours - aiHours) * rate;
 
   return (
-    <div className="calc card">
+    <div className="calc panel">
       <div className="calc__inputs">
         <label className="calc__field">
           <span>Точек в сети <b>{points}</b></span>

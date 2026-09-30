@@ -27,8 +27,8 @@ export function LegalPage({ doc, related }: { doc: LegalDoc; related: { href: st
     <>
       <SiteHeader home={false} auditHref="/#audit" />
       <main className="container legal">
-        <a href="/" className="vis-back">← На главную</a>
-        <h1 className="h2">{doc.title}</h1>
+        <a href="/" className="back">← На главную</a>
+        <h1 className="h2 legal__title">{doc.title}</h1>
         <p className="legal__updated">Редакция от {doc.updated}</p>
         {doc.intro.map((p) => (
           <p key={p}>{p}</p>
@@ -51,7 +51,7 @@ export function LegalPage({ doc, related }: { doc: LegalDoc; related: { href: st
             </li>
           ))}
         </ol>
-        <section className="card legal__operator" aria-label="Реквизиты оператора">
+        <section className="panel legal__operator" aria-label="Реквизиты оператора">
           <h2 className="h3">Оператор персональных данных</h2>
           <dl>
             <dt>Оператор</dt>
