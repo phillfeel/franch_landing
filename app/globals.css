@@ -724,6 +724,12 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .flow__wire { justify-self: center; width: 2px; height: 32px; }
   .flow__wire span { inset: 0 0 auto 0; width: auto; height: 30%; animation-name: flowY; }
   .mod { width: min(var(--w), calc(100vw - 64px)); }
+  /* На узком экране карточки разной высоты: тянем все до самой высокой, иначе над короткими остаётся пустота. */
+  .ribbon__track { align-items: stretch; }
+  .mod__card { flex: 1; }
+  .mod__result { margin-top: auto; }
+  /* «Видимость сети» с двумя мокапами в полтора раза выше соседей — черновик ответа на телефоне прячем. */
+  .mod .mock-draft { display: none; }
   .ribbon__scroller { scroll-snap-type: x mandatory; }
   .faq__item p { padding-right: 0; }
   .vis-mock__chat { margin-right: 0; }
