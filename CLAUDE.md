@@ -24,5 +24,5 @@ gh run list -R phillfeel/franch_landing -b dev -L 3
 ## Переменные сборки
 
 Задаются в GitHub (Settings → Secrets and variables → Actions) и передаются как build-args:
-`vars.SITE_URL` → `NEXT_PUBLIC_SITE_URL`, `vars.TELEGRAM_URL` → `NEXT_PUBLIC_TELEGRAM_URL`.
-Секреты: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `DOKPLOY_FRANCH_WEBHOOK_URL`, `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID` (бот для заявок с формы, кладутся файлами в образ).
+`vars.SITE_URL` → `NEXT_PUBLIC_SITE_URL`, `vars.WEB3FORMS_KEY` → `NEXT_PUBLIC_WEB3FORMS_KEY`, `vars.TELEGRAM_URL` → `NEXT_PUBLIC_TELEGRAM_URL`.
+Секреты: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `DOKPLOY_FRANCH_WEBHOOK_URL`.

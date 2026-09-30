@@ -3,9 +3,11 @@
 import { useState, type FormEvent } from "react";
 import { formOptions, site } from "@/lib/content";
 
-// Заявка уходит на nginx того же сайта, он пересылает её в Telegram-бота (nginx/lead.js).
-// В `npm run dev` такого адреса нет — локально форма показывает ошибку отправки.
-const ENDPOINT = "/api/lead";
+// Заявка уходит из браузера в Web3Forms, он присылает письмо на почту, к которой привязан ключ.
+// Не через свой сервер: из московского хостинга не открывается api.telegram.org (бот так и не заработал).
+// Ключ задаётся при сборке через NEXT_PUBLIC_WEB3FORMS_KEY. Он публичный по замыслу Web3Forms, но без него форма показывает ошибку.
+const ENDPOINT = "https://api.web3forms.com/submit";
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
 
 type Errors = { name?: string; contact?: string; agree?: string };
 
@@ -51,26 +53,33 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
     if (next.name || next.contact || next.agree) return;
 
     setStatus("sending");
-    // Плоские поля: обработчик берёт из них только известные ключи и utm_*.
+    // Плоские поля: Web3Forms выводит в письме каждое поле строкой «ключ: значение», поэтому ключи по-русски.
+    // access_key, subject, from_name, botcheck — служебные поля Web3Forms.
     const payload = {
-      name,
-      contact,
-      company: company || "Не указана",
-      points: points || "Не указано",
-      goals: goals.join(", ") || "—",
-      page: window.location.href,
+      access_key: ACCESS_KEY,
+      subject: `Новая заявка с лендинга HUBIS от ${name}`,
+      from_name: "Лендинг HUBIS",
+      botcheck: false,
+      "Имя": name,
+      "Контакт": contact,
+      "Компания": company || "Не указана",
+      "Точек": points || "Не указано",
+      "Что улучшить": goals.join(", ") || "—",
+      "Страница": window.location.href,
       ...readUtm(),
     };
     try {
+      if (!ACCESS_KEY) throw new Error("NEXT_PUBLIC_WEB3FORMS_KEY is not set");
       const res = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => null);
-      if (!res.ok || data?.ok !== true) throw new Error(String(res.status));
+      if (!res.ok || data?.success !== true) throw new Error(data?.message || String(res.status));
       setStatus("sent");
-    } catch {
+    } catch (err) {
+      console.error("Заявка не отправлена:", err);
       setStatus("error");
     }
   }

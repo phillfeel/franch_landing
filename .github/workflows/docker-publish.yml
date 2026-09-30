@@ -25,55 +25,20 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # Сначала собираем образ без секретов и проверяем nginx: сломанный конфиг не должен попасть в Dokploy.
-      # Итоговый образ ниже отличается только файлами с токеном и чатом.
-      - name: Build for smoke test
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          load: true
-          platforms: linux/amd64
-          tags: franch-landing:test
-          build-args: |
-            NEXT_PUBLIC_SITE_URL=${{ vars.SITE_URL }}
-            NEXT_PUBLIC_TELEGRAM_URL=${{ vars.TELEGRAM_URL }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Smoke test
-        run: |
-          set -eu
-          lead() { curl -s -o /dev/null -w '%{http_code}' -X POST "http://localhost:$1/api/lead" -H 'Content-Type: application/json' -d '{"name":"CI","contact":"@ci_test"}'; }
-          # Без токена: сайт отдаётся, /api/lead честно отвечает 503.
-          docker run -d --name plain -p 8081:8080 franch-landing:test
-          # С заведомо неверным токеном: Telegram отвечает 401, значит DNS, TLS и ngx.fetch работают.
-          docker run -d --name fake -p 8082:8080 -e TELEGRAM_BOT_TOKEN=123:ci-fake -e TELEGRAM_CHAT_ID=1 franch-landing:test
-          sleep 3
-          curl -fsS http://localhost:8081/health
-          curl -fsS http://localhost:8081/ | grep -qi '<h1'
-          test "$(lead 8081)" = 503
-          test "$(lead 8082)" = 502
-          docker logs fake 2>&1 | grep -q 'telegram answered 401'
-      - name: Smoke test logs
-        if: failure()
-        run: docker logs plain; docker logs fake
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           platforms: linux/amd64
-          # Токен бота и чат для заявок: попадают файлами в образ (см. Dockerfile), в код страницы — нет.
-          secrets: |
-            telegram_bot_token=${{ secrets.TELEGRAM_BOT_TOKEN }}
-            telegram_chat_id=${{ secrets.TELEGRAM_CHAT_ID }}
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:main
             ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_SITE_URL=${{ vars.SITE_URL }}
+            NEXT_PUBLIC_WEB3FORMS_KEY=${{ vars.WEB3FORMS_KEY }}
             NEXT_PUBLIC_TELEGRAM_URL=${{ vars.TELEGRAM_URL }}
-            SECRETS_REV=${{ github.run_id }}-${{ github.run_attempt }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Trigger Dokploy deploy
