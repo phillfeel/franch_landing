@@ -8,7 +8,7 @@ export const site = {
   about: "AI-интегратор для франчайзинговых и розничных сетей. Контроль, аналитика и обработка заявок поверх ваших систем.",
   email: "aes2biz@gmail.com",
   cities: "Москва | Челябинск",
-  telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/",
+  telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/Robotism_AI",
   // Оператор персональных данных и реквизиты в подвале — те же, что в политике на robotism.online.
   operator: {
     name: "Индивидуальный предприниматель",
