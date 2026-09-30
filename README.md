@@ -27,16 +27,18 @@ npm run build    # статический сайт в out/
 
 ## Форма заявки
 
-Без бэкенда форма только показывает экран «Спасибо». Чтобы заявки куда-то приходили, задайте URL вебхука,
-принимающего JSON `POST` (свой API, n8n/Make, Telegram-бот, amoCRM/Bitrix24):
+Форма отправляет `POST /api/lead` на тот же сайт. Его принимает nginx в контейнере ([nginx/lead.js](nginx/lead.js), модуль njs)
+и пересылает заявку сообщением в Telegram-бота. Токен бота в сборку не попадает, он задаётся при запуске контейнера
+(Dokploy → Environment):
 
-- локально: `NEXT_PUBLIC_FORM_ENDPOINT=https://... npm run build`
-- на GitHub: Settings → Secrets and variables → Actions → Variables → `FORM_ENDPOINT`
+- `TELEGRAM_BOT_TOKEN` — токен от @BotFather;
+- `TELEGRAM_CHAT_ID` — чат, куда писать: личка (боту сначала нужно написать `/start`) или группа с ботом.
 
-Формат рассчитан на [FormSubmit](https://formsubmit.co) (`https://formsubmit.co/ajax/<адрес или алиас>`), как на robotism.online.
+Без этих переменных `/api/lead` отвечает 503, форма показывает ошибку. Смена токена или чата — правка переменных
+и перезапуск контейнера, пересобирать не нужно. В `npm run dev` адреса `/api/lead` нет.
 
-Тело запроса — плоский JSON: `{ name, contact, company, points, goals, page, utm_*, _subject, _template }`
-(`goals` — строка через запятую, `_`-поля служебные для FormSubmit). Если в ответе `success` не `true` — форма показывает ошибку.
+Тело запроса — плоский JSON: `{ name, contact, company, points, goals, page, utm_* }` (`goals` — строка через запятую).
+Ответ `{ "ok": true }` — заявка доставлена, иначе форма показывает ошибку. Лимит: 5 заявок в минуту с адреса.
 UTM-метки из QR-кодов мероприятий сохраняются автоматически.
 
 Ссылка на Telegram — переменная `TELEGRAM_URL` (по умолчанию `https://t.me/`).

@@ -3,9 +3,9 @@
 import { useState, type FormEvent } from "react";
 import { formOptions, site } from "@/lib/content";
 
-// Куда отправлять заявку: URL вебхука (свой API, Telegram-бот, amoCRM, Bitrix24 и т.п.), принимает JSON POST.
-// Задаётся при сборке через NEXT_PUBLIC_FORM_ENDPOINT. Пока не задан — заявка только показывает экран «Спасибо».
-const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || "";
+// Заявка уходит на nginx того же сайта, он пересылает её в Telegram-бота (nginx/lead.js).
+// В `npm run dev` такого адреса нет — локально форма показывает ошибку отправки.
+const ENDPOINT = "/api/lead";
 
 type Errors = { name?: string; contact?: string; agree?: string };
 
@@ -51,8 +51,7 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
     if (next.name || next.contact || next.agree) return;
 
     setStatus("sending");
-    // Плоские поля: FormSubmit (как на robotism.online) рисует письмо таблицей, вложенные массивы/объекты в ней не читаются.
-    // Поля с "_" — служебные для FormSubmit: тема письма и шаблон.
+    // Плоские поля: обработчик берёт из них только известные ключи и utm_*.
     const payload = {
       name,
       contact,
@@ -61,21 +60,15 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
       goals: goals.join(", ") || "—",
       page: window.location.href,
       ...readUtm(),
-      _subject: `Новая заявка с лендинга для франшиз от ${name}`,
-      _template: "table",
     };
     try {
-      if (ENDPOINT) {
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-        // FormSubmit отвечает 200 и при отказе (например, форма не активирована) — смотрим поле success.
-        const data = await res.json().catch(() => null);
-        if (data && "success" in data && String(data.success) !== "true") throw new Error(data.message);
-      }
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || data?.ok !== true) throw new Error(String(res.status));
       setStatus("sent");
     } catch {
       setStatus("error");

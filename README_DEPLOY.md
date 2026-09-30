@@ -8,7 +8,6 @@ The site is a static Next.js export. GitHub Actions builds `out/` inside a Node 
 npm ci
 npm run lint
 NEXT_PUBLIC_SITE_URL=https://franch.example.com \
-NEXT_PUBLIC_FORM_ENDPOINT=https://example.com/public-form-webhook \
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
 npm run build
 ```
@@ -18,7 +17,6 @@ Build and test the production image:
 ```bash
 docker build \
   --build-arg NEXT_PUBLIC_SITE_URL=https://franch.example.com \
-  --build-arg NEXT_PUBLIC_FORM_ENDPOINT=https://example.com/public-form-webhook \
   --build-arg NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
   -t franch-landing:test .
 docker run --rm -d --name franch-landing-test -p 8080:8080 franch-landing:test
@@ -41,7 +39,6 @@ Configure these Actions Variables:
 
 ```text
 SITE_URL
-FORM_ENDPOINT
 TELEGRAM_URL
 ```
 
@@ -66,7 +63,14 @@ CPU limit: 0.10–0.15 CPU
 
 Authenticate the Docker Hub registry with a read-capable token. Add the production domain and enable HTTPS/Let's Encrypt. Create a deploy webhook and store its URL in `DOKPLOY_FRANCH_WEBHOOK_URL`.
 
-No runtime environment variables are required: public values are embedded during the GitHub Actions build.
+Public values are embedded during the GitHub Actions build. The lead form needs two runtime environment variables (Dokploy → Environment), they never reach the build or the page code:
+
+```text
+TELEGRAM_BOT_TOKEN=<token from @BotFather>
+TELEGRAM_CHAT_ID=<chat that receives leads>
+```
+
+Without them `POST /api/lead` answers 503. Changing them needs only a container restart.
 
 ## DNS
 
