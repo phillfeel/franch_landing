@@ -13,7 +13,6 @@ NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
 npm run build
 ```
 
-
 Build and test the production image :
 
 ```bash
