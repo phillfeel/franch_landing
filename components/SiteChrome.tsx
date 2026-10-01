@@ -94,6 +94,7 @@ export function SiteHeader({ home = true, auditHref = "#audit" }: { home?: boole
             <span className="header__cta-short">{site.ctaShort}</span>
           </a>
         </div>
+        <a href={auditHref} className="btn btn--dark btn--sm header__cta-mobile">{site.ctaMobile}</a>
         <MobileMenu links={links} auditHref={auditHref} telegram={site.telegram} cta={site.ctaShort} />
       </div>
     </header>

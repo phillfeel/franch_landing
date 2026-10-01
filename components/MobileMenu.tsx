@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-// Мобильное меню шапки: кнопка «Меню» раскрывает панель под шапкой, клик по пункту или Esc её закрывает.
+// Мобильное меню шапки: бургер раскрывает панель под шапкой, клик по пункту или Esc её закрывает.
 export function MobileMenu({
   links,
   auditHref,
@@ -31,9 +31,10 @@ export function MobileMenu({
         className="menu-btn"
         aria-expanded={open}
         aria-controls="mobile-menu"
+        aria-label={open ? "Закрыть меню" : "Открыть меню"}
         onClick={() => setOpen((v) => !v)}
       >
-        {open ? "Закрыть" : "Меню"}
+        <span className="menu-btn__bars" aria-hidden="true" />
       </button>
       <nav id="mobile-menu" className={`mobile-menu${open ? " is-open" : ""}`} aria-label="Мобильное меню" hidden={!open}>
         {links.map((n) => (

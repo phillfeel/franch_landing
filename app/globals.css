@@ -187,26 +187,50 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .header__actions { display: flex; align-items: center; gap: 10px; }
 .header__actions .btn { white-space: nowrap; }
 .header__cta-short { display: none; }
-.menu-btn, .mobile-menu { display: none; }
+.menu-btn, .mobile-menu, .header__cta-mobile { display: none; }
 
 @media (max-width: 1179px) {
   .header__cta-full { display: none; }
   .header__cta-short { display: inline; }
 }
 @media (max-width: 819px) {
+  .header__inner { gap: 10px; }
   .header__nav, .header__actions { display: none; }
+  .header__cta-mobile { display: inline-flex; margin-left: auto; white-space: nowrap; }
   .menu-btn {
+    position: relative;
     display: block;
-    margin-left: auto;
+    flex: none;
+    width: 44px;
     height: 44px;
-    padding: 0 16px;
+    padding: 0;
     border: 1px solid var(--line-strong);
     border-radius: 10px;
     background: var(--surface);
-    font-size: 14px;
-    font-weight: 600;
+    color: inherit;
     cursor: pointer;
   }
+  /* Три полоски: средняя — сам span, верхняя и нижняя — псевдоэлементы. В открытом меню складываются в крестик. */
+  .menu-btn__bars,
+  .menu-btn__bars::before,
+  .menu-btn__bars::after {
+    position: absolute;
+    left: 50%;
+    width: 18px;
+    height: 2px;
+    margin-left: -9px;
+    border-radius: 1px;
+    background: currentColor;
+    transition: transform .2s ease, background-color .2s ease;
+  }
+  .menu-btn__bars { top: 50%; margin-top: -1px; }
+  .menu-btn__bars::before,
+  .menu-btn__bars::after { content: ""; left: 0; margin-left: 0; }
+  .menu-btn__bars::before { top: -6px; }
+  .menu-btn__bars::after { top: 6px; }
+  .menu-btn[aria-expanded="true"] .menu-btn__bars { background-color: transparent; }
+  .menu-btn[aria-expanded="true"] .menu-btn__bars::before { transform: translateY(6px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] .menu-btn__bars::after { transform: translateY(-6px) rotate(-45deg); }
   .mobile-menu.is-open {
     position: absolute;
     top: 100%;
