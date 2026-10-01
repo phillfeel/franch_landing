@@ -7,7 +7,7 @@ Next.js-лендинг для франчайзинговых сетей (SSG). �
 - Рабочая ветка — `dev`. Коммиты делать и пушить в `dev`, не в `main`.
 - `dev` опережает `main`: новую локальную ветку создавать от `origin/dev`.
 - `.github/workflows/docker-publish.yml` собирает Docker-образ (`<DOCKERHUB_USERNAME>/franch-landing`) и дёргает вебхук Dokploy, который подтягивает образ и перезапускает контейнер:
-  - push в `dev` → теги `dev`, `sha-<commit>` → вебхук `DOKPLOY_FRANCH_DEV_WEBHOOK_URL` (дев-контейнер, образ `:dev`);
+  - push в `dev` → `<DOCKERHUB_USERNAME>/franch-landing-dev` (теги `latest`, `dev`, `sha-<commit>`) → вебхук `DOKPLOY_FRANCH_DEV_WEBHOOK_URL` (дев-контейнер);
   - push в `main` → теги `latest`, `main`, `sha-<commit>` → вебхук `DOKPLOY_FRANCH_WEBHOOK_URL` (прод hubis.ru, образ `:latest`).
 - На прод попадает только то, что смержено в `main`.
 - Ручной запуск: `gh workflow run docker-publish.yml -R phillfeel/franch_landing --ref dev`.

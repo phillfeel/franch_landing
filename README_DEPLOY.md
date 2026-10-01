@@ -50,7 +50,7 @@ TELEGRAM_URL
 
 Each push to `main` publishes `latest`, `main`, and an immutable `sha-<full-git-sha>` tag, then calls `DOKPLOY_FRANCH_WEBHOOK_URL` (production).
 
-Each push to `dev` publishes `dev` and `sha-<full-git-sha>`, then calls `DOKPLOY_FRANCH_DEV_WEBHOOK_URL`. The dev Dokploy application must use the `<namespace>/franch-landing:dev` image.
+Each push to `dev` publishes `latest`, `dev`, and `sha-<full-git-sha>` to the separate `<namespace>/franch-landing-dev` repository, then calls `DOKPLOY_FRANCH_DEV_WEBHOOK_URL`. The dev Dokploy application uses `<namespace>/franch-landing-dev:latest`.
 
 ## Docker Hub
 

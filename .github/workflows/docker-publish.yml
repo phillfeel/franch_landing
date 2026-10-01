@@ -1,7 +1,7 @@
 name: Build and publish Docker image
 
-# main → прод (теги latest, main; вебхук DOKPLOY_FRANCH_WEBHOOK_URL)
-# dev  → дев-контейнер (тег dev; вебхук DOKPLOY_FRANCH_DEV_WEBHOOK_URL)
+# main → <user>/franch-landing:latest     → вебхук DOKPLOY_FRANCH_WEBHOOK_URL (прод)
+# dev  → <user>/franch-landing-dev:latest → вебхук DOKPLOY_FRANCH_DEV_WEBHOOK_URL (дев)
 on:
   push:
     branches: [main, dev]
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/franch-landing
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/franch-landing${{ github.ref_name == 'dev' && '-dev' || '' }}
 
 jobs:
   build-and-publish:
@@ -35,7 +35,7 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            ${{ github.ref_name == 'main' && format('{0}:latest', env.IMAGE_NAME) || '' }}
+            ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
             ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           build-args: |
