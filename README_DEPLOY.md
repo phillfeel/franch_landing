@@ -11,6 +11,7 @@ NEXT_PUBLIC_SITE_URL=https://hubis.ru \
 NEXT_PUBLIC_WEB3FORMS_KEY=00000000-0000-0000-0000-000000000000 \
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
 npm run build
+
 ```
 
 
