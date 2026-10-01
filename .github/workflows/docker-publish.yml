@@ -1,15 +1,17 @@
 name: Build and publish Docker image
 
+# main → прод (теги latest, main; вебхук DOKPLOY_FRANCH_WEBHOOK_URL)
+# dev  → дев-контейнер (тег dev; вебхук DOKPLOY_FRANCH_DEV_WEBHOOK_URL)
 on:
   push:
-    branches: [dev]
+    branches: [main, dev]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: docker-publish
+  group: docker-publish-${{ github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -17,6 +19,7 @@ env:
 
 jobs:
   build-and-publish:
+    if: github.ref_name == 'main' || github.ref_name == 'dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,8 +35,8 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:main
+            ${{ github.ref_name == 'main' && format('{0}:latest', env.IMAGE_NAME) || '' }}
+            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
             ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_SITE_URL=${{ vars.SITE_URL }}
@@ -43,5 +46,10 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Trigger Dokploy deploy
         env:
-          DOKPLOY_WEBHOOK: ${{ secrets.DOKPLOY_FRANCH_WEBHOOK_URL }}
-        run: curl --fail --show-error --silent --retry 2 --retry-delay 2 -X POST "$DOKPLOY_WEBHOOK"
+          DOKPLOY_WEBHOOK: ${{ github.ref_name == 'main' && secrets.DOKPLOY_FRANCH_WEBHOOK_URL || secrets.DOKPLOY_FRANCH_DEV_WEBHOOK_URL }}
+        run: |
+          if [ -z "$DOKPLOY_WEBHOOK" ]; then
+            echo "::error::Не задан секрет вебхука Dokploy для ветки ${{ github.ref_name }}"
+            exit 1
+          fi
+          curl --fail --show-error --silent --retry 2 --retry-delay 2 -X POST "$DOKPLOY_WEBHOOK"
