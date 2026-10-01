@@ -3,8 +3,6 @@ import { Geologica, Golos_Text, IBM_Plex_Mono } from "next/font/google";
 import { site } from "@/lib/content";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robotism.online";
-
 // Шрифты скачиваются на этапе сборки и отдаются с того же домена — без запросов к Google у посетителя.
 // Geologica — заголовки и цифры, Golos Text — основной текст, IBM Plex Mono — подписи и данные в интерфейсах.
 const geologica = Geologica({
@@ -27,7 +25,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(site.url),
   title: site.title,
   description: site.description,
   alternates: { canonical: "/" },
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
     siteName: site.name,
-    url: siteUrl,
+    url: site.url,
   },
   robots: { index: true, follow: true },
 };

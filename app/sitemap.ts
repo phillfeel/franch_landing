@@ -1,11 +1,10 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/lib/content";
 
 export const dynamic = "force-static";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robotism.online";
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteUrl.replace(/\/$/, "");
+  const base = site.url;
   return [
     { url: `${base}/`, lastModified: new Date() },
     { url: `${base}/visibility/`, lastModified: new Date() },

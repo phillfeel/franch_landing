@@ -2,6 +2,8 @@
 
 export const site = {
   name: "HUBIS",
+  // Боевой адрес лендинга: canonical, Open Graph, sitemap и robots. В сборке переопределяется vars.SITE_URL.
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://hubis.ru").replace(/\/$/, ""),
   title: "Внедрение ИИ во франшизы и сети — автоматизация УК | HUBIS",
   description:
     "ИИ-агенты для франчайзинговых сетей: чат-боты, информационный дашборд, распознавание документов в 1С, отзывы и продвижение в нейросетях. Пилот за 2–4 недели.",

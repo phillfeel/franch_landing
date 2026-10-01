@@ -7,7 +7,7 @@ The site is a static Next.js export. GitHub Actions builds `out/` inside a Node 
 ```bash
 npm ci
 npm run lint
-NEXT_PUBLIC_SITE_URL=https://franch.example.com \
+NEXT_PUBLIC_SITE_URL=https://hubis.ru \
 NEXT_PUBLIC_WEB3FORMS_KEY=00000000-0000-0000-0000-000000000000 \
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
 npm run build
@@ -17,7 +17,7 @@ Build and test the production image:
 
 ```bash
 docker build \
-  --build-arg NEXT_PUBLIC_SITE_URL=https://franch.example.com \
+  --build-arg NEXT_PUBLIC_SITE_URL=https://hubis.ru \
   --build-arg NEXT_PUBLIC_WEB3FORMS_KEY=00000000-0000-0000-0000-000000000000 \
   --build-arg NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
   -t franch-landing:test .
@@ -75,8 +75,8 @@ Point the production hostname to the VPS with an `A` record, then let Dokploy is
 ## Verification
 
 ```bash
-curl -fsS https://franch.example.com/health
-curl -fsSL https://franch.example.com/ | grep -i '<h1'
+curl -fsS https://hubis.ru/health
+curl -fsSL https://hubis.ru/ | grep -i '<h1'
 ```
 
 Also verify `/sitemap.xml`, `/robots.txt`, canonical URL, `<title>`, description and JSON-LD in page source.
