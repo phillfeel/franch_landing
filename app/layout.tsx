@@ -38,6 +38,7 @@ export const metadata: Metadata = {
     url: site.url,
   },
   robots: { index: true, follow: true },
+  verification: { yandex: "197e1b4ec3229625" },
 };
 
 export const viewport: Viewport = {
