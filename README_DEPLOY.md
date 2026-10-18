@@ -8,7 +8,6 @@ The site is a static Next.js export. GitHub Actions builds `out/` inside a Node 
 npm ci
 npm run lint
 NEXT_PUBLIC_SITE_URL=https://hubis.ru \
-NEXT_PUBLIC_WEB3FORMS_KEY=00000000-0000-0000-0000-000000000000 \
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
 npm run build
 
@@ -20,7 +19,6 @@ Build and test the production image :
 ```bash
 docker build \
   --build-arg NEXT_PUBLIC_SITE_URL=https://hubis.ru \
-  --build-arg NEXT_PUBLIC_WEB3FORMS_KEY=00000000-0000-0000-0000-000000000000 \
   --build-arg NEXT_PUBLIC_TELEGRAM_URL=https://t.me/example \
   -t franch-landing:test .
 docker run --rm -d --name franch-landing-test -p 8080:8080 franch-landing:test
@@ -38,7 +36,6 @@ DOCKERHUB_USERNAME
 DOCKERHUB_TOKEN
 DOKPLOY_FRANCH_WEBHOOK_URL
 DOKPLOY_FRANCH_DEV_WEBHOOK_URL
-WEB3FORMS_KEY
 ```
 
 Configure these Actions Variables:
@@ -48,7 +45,7 @@ SITE_URL
 TELEGRAM_URL
 ```
 
-`NEXT_PUBLIC_*` values are public by design and are compiled into the static HTML/JS. Never put credentials, API keys, or signing secrets into them. The Web3Forms access key is the one exception: it is public by Web3Forms design and is stored as a secret only to keep it out of the repo.
+`NEXT_PUBLIC_*` values are public by design and are compiled into the static HTML/JS. Never put credentials, API keys, or signing secrets into them. The Form-Hook site key is public by design and lives in `components/AuditForm.tsx`.
 
 Each push to `main` publishes `latest`, `main`, and an immutable `sha-<full-git-sha>` tag, then calls `DOKPLOY_FRANCH_WEBHOOK_URL` (production).
 

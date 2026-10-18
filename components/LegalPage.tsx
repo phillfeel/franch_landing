@@ -58,6 +58,8 @@ export function LegalPage({ doc, related }: { doc: LegalDoc; related: { href: st
             <dd>{op.name}</dd>
             <dt>ИНН</dt>
             <dd>{op.inn}</dd>
+            <dt>ОГРНИП</dt>
+            <dd>{op.ogrnip}</dd>
             <dt>Адрес</dt>
             <dd>{op.address}</dd>
             <dt>Email</dt>

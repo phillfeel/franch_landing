@@ -3,11 +3,12 @@
 import { useState, type FormEvent } from "react";
 import { formOptions, site } from "@/lib/content";
 
-// Заявка уходит из браузера в Web3Forms, он присылает письмо на почту, к которой привязан ключ.
+// Заявка уходит из браузера в Form-Hook, он присылает письмо на почту, указанную в его кабинете.
 // Не через свой сервер: из московского хостинга не открывается api.telegram.org (бот так и не заработал).
-// Ключ задаётся при сборке через NEXT_PUBLIC_WEB3FORMS_KEY. Он публичный по замыслу Web3Forms, но без него форма показывает ошибку.
-const ENDPOINT = "https://api.web3forms.com/submit";
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
+// Ключ сайта публичный по замыслу Form-Hook (он часть URL), поэтому лежит в коде; при необходимости его
+// переопределяет NEXT_PUBLIC_FORMHOOK_SITE_KEY при сборке.
+const SITE_KEY = process.env.NEXT_PUBLIC_FORMHOOK_SITE_KEY || "01M57VQG2QABY202G48WJV1K9R";
+const ENDPOINT = `https://app.form-hook.com/api/c1/sites/${SITE_KEY}/submissions`;
 
 type Errors = { name?: string; contact?: string; agree?: string };
 
@@ -36,6 +37,8 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
   const [points, setPoints] = useState("");
   const [goals, setGoals] = useState<string[]>(initialGoals);
   const [agree, setAgree] = useState(false);
+  // Согласие на рассылки отдельное и необязательное: форма отправляется и без него.
+  const [marketing, setMarketing] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -53,30 +56,24 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
     if (next.name || next.contact || next.agree) return;
 
     setStatus("sending");
-    // Плоские поля: Web3Forms выводит в письме каждое поле строкой «ключ: значение», поэтому ключи по-русски.
-    // access_key, subject, from_name, botcheck — служебные поля Web3Forms.
-    const payload = {
-      access_key: ACCESS_KEY,
-      subject: `Новая заявка с лендинга HUBIS от ${name}`,
-      from_name: "Лендинг HUBIS",
-      botcheck: false,
+    // Form-Hook принимает поля заявки в объекте data и показывает их в письме как «ключ: значение», поэтому ключи по-русски.
+    const data = {
       "Имя": name,
       "Контакт": contact,
       "Компания": company || "Не указана",
       "Точек": points || "Не указано",
       "Что улучшить": goals.join(", ") || "—",
+      "Согласие на рассылки": marketing ? "Да" : "Нет",
       "Страница": window.location.href,
       ...readUtm(),
     };
     try {
-      if (!ACCESS_KEY) throw new Error("NEXT_PUBLIC_WEB3FORMS_KEY is not set");
       const res = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ data }),
       });
-      const data = await res.json().catch(() => null);
-      if (!res.ok || data?.success !== true) throw new Error(data?.message || String(res.status));
+      if (!res.ok) throw new Error(`Form-Hook responded ${res.status}: ${await res.text().catch(() => "")}`);
       setStatus("sent");
     } catch (err) {
       console.error("Заявка не отправлена:", err);
@@ -193,6 +190,10 @@ export function AuditForm({ initialGoals = [] }: { initialGoals?: string[] }) {
         </span>
       </label>
       {errors.agree && <span className="field__error">{errors.agree}</span>}
+      <label className="consent">
+        <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} />
+        <span>Я даю согласие на получение информационных и рекламных материалов (необязательно)</span>
+      </label>
       <button type="submit" className="btn btn--dark btn--lg" disabled={status === "sending"}>
         <span className="dot" aria-hidden="true" />
         {status === "sending" ? "Отправляем…" : site.cta}
