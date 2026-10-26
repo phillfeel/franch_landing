@@ -182,7 +182,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .header__inner { display: flex; align-items: center; gap: 28px; padding-top: 14px; padding-bottom: 14px; }
 .logo { flex: none; display: flex; }
-.logo svg { height: 36px; width: auto; }
+.logo img { height: 36px; width: auto; }
 .header__nav { flex: 1; display: flex; gap: 22px; font-size: 15px; white-space: nowrap; }
 .header__actions { display: flex; align-items: center; gap: 10px; }
 .header__actions .btn { white-space: nowrap; }
@@ -626,7 +626,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .footer { border-top: 1.5px solid var(--ink); }
 .footer__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 32px; padding-top: 48px; padding-bottom: 28px; }
 .footer__about { display: flex; flex-direction: column; gap: 14px; }
-.footer__about .logo svg { height: 40px; }
+.footer__about .logo img { height: 40px; }
 .footer__about p { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 .footer__about .footer__cities { color: var(--ink); }
 /* Логотип МГУ в файле белый — на светлом фоне перекрашиваем в графит. */
