@@ -704,6 +704,71 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .calc__total .is-positive { color: var(--accent); }
 .calc__note { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--ink-3); }
 
+/* ---------- Кейс: поисковый трафик ---------- */
+.traffic-case__heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; }
+.traffic-case__heading .h2 { margin-top: 18px; max-width: 650px; }
+.traffic-case__period { display: grid; grid-template-columns: 8px auto; align-items: center; gap: 6px 10px; font: 12px/1.5 var(--mono); white-space: nowrap; }
+.traffic-case__period > span:last-child { grid-column: 2; color: var(--ink-3); }
+.traffic-case__body { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr); border: 1px solid var(--line); border-radius: var(--r-xl); overflow: hidden; background: var(--paper); }
+.traffic-case__story { display: flex; flex-direction: column; align-items: start; gap: 24px; padding: clamp(24px, 3vw, 40px); background: var(--ink); color: var(--paper); }
+.traffic-case__domain { display: flex; justify-content: space-between; align-self: stretch; padding-bottom: 20px; border-bottom: 1px solid var(--dark-line); font: 13px/1.5 var(--mono); color: var(--dark-text); }
+.traffic-case__domain span { color: var(--accent); }
+.traffic-case__story h3 { font: 500 clamp(25px, 2.6vw, 34px)/1.2 var(--display); letter-spacing: -.02em; }
+.traffic-case__story > p { color: var(--dark-text); font-size: 15px; line-height: 1.65; }
+.traffic-case__share { width: 100%; margin-top: auto; padding-top: 12px; }
+.traffic-case__share strong { display: block; color: var(--accent); font: 500 clamp(56px, 6vw, 80px)/1.1 var(--display); letter-spacing: -.05em; }
+.traffic-case__share strong span { margin-left: 4px; font-size: .5em; }
+.traffic-case__share p { margin-top: 8px; font-size: 15px; }
+.traffic-case__share > div { height: 5px; background: var(--dark-track); border-radius: 8px; margin: 20px 0 10px; overflow: hidden; }
+.traffic-case__share i { display: block; width: 72.51%; height: 100%; background: var(--accent); }
+.traffic-case__share small { color: var(--dark-mute); font: 11px/1.5 var(--mono); }
+.traffic-case__story .btn { margin-top: 6px; color: var(--paper); border-color: var(--dark-track); font-size: 14px; padding-inline: 16px; }
+.traffic-case__story .btn:hover { background: var(--dark-2); border-color: var(--accent); }
+.traffic-case__evidence { min-width: 0; padding: clamp(20px, 2.5vw, 32px); }
+.traffic-case__metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-bottom: 28px; }
+.traffic-case__metrics > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.traffic-case__metrics dt { font-size: 12px; color: var(--ink-3); margin-bottom: 8px; }
+.traffic-case__metrics dd { font: 500 clamp(20px, 2.3vw, 30px)/1.2 var(--display); letter-spacing: -.04em; white-space: nowrap; }
+.traffic-report { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.traffic-report__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid var(--line-soft); }
+.traffic-report__tabs { display: flex; gap: 4px; }
+.traffic-report__tabs button { padding: 8px 10px; border: 0; border-radius: 7px; background: transparent; font-size: 12px; cursor: pointer; color: var(--ink-3); }
+.traffic-report__tabs button[aria-pressed="true"] { color: var(--ink); background: var(--fill); font-weight: 500; }
+.traffic-report__tabs button:hover { background: var(--bg); }
+.traffic-report__source { font: 10px/1.4 var(--mono); color: var(--ink-3); }
+.traffic-report__chart { position: relative; display: block; width: 100%; padding: 14px 12px 28px; border: 0; background: white; cursor: zoom-in; }
+.traffic-report__chart img { width: 100%; height: auto; aspect-ratio: 790 / 380; object-fit: contain; }
+.traffic-report__chart > span { position: absolute; bottom: 7px; right: 16px; color: var(--ink-3); font: 10px/1.4 var(--mono); }
+.traffic-report__legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 22px; padding: 20px; border-top: 1px solid var(--line-soft); }
+.traffic-report__legend > div { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.traffic-report__legend dt { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink-2); }
+.traffic-report__legend i { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.traffic-report__legend dd { font: 500 12px/1.5 var(--mono); white-space: nowrap; }
+.traffic-case__note { margin-top: 16px; font-size: 11px; line-height: 1.6; color: var(--ink-3); }
+.traffic-dialog { width: min(960px, calc(100% - 32px)); max-height: calc(100dvh - 40px); padding: 24px; border: 0; border-radius: var(--r-lg); color: var(--ink); overflow-y: auto; }
+.traffic-dialog::backdrop { background: #10171edb; backdrop-filter: blur(6px); }
+.traffic-dialog__head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 20px; }
+.traffic-dialog__head p { margin-top: 4px; font-size: 12px; color: var(--ink-3); }
+.traffic-dialog__head button { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); font-size: 26px; cursor: pointer; }
+.traffic-dialog > img { width: 100%; height: auto; }
+@media (max-width: 1000px) {
+  .traffic-case__body { grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); }
+  .traffic-case__metrics { gap: 8px; }
+  .traffic-case__metrics > div + div { padding-left: 8px; }
+  .traffic-report__source { display: none; }
+  .traffic-report__legend { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .traffic-case__heading { align-items: start; flex-direction: column; }
+  .traffic-case__body { grid-template-columns: 1fr; }
+  .traffic-case__story { gap: 20px; }
+  .traffic-case__share strong { font-size: 64px; }
+  .traffic-case__evidence { padding: 20px 16px; }
+  .traffic-case__metrics dd { font-size: clamp(19px, 5vw, 28px); }
+  .traffic-report__legend { padding: 16px; }
+  .traffic-dialog { padding: 16px; }
+}
+
 /* ---------- Юридические страницы ---------- */
 
 .legal { display: flex; flex-direction: column; max-width: 860px; padding-top: 40px; padding-bottom: 96px; }

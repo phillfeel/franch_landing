@@ -6,6 +6,7 @@ import { ModuleMock } from "@/components/ModuleMock";
 import { Ribbon } from "@/components/Ribbon";
 import { DashboardMockup } from "@/components/DashboardMockup";
 import { CaseSlider } from "@/components/CaseSlider";
+import { TrafficCase } from "@/components/TrafficCase";
 import { DeckButton } from "@/components/DeckButton";
 import { Cta, SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import { AuditBlock, Faq, FinalForm, SectionHead, Steps } from "@/components/Sections";
@@ -204,6 +205,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <TrafficCase />
 
         <AuditBlock {...auditOffer} />
 

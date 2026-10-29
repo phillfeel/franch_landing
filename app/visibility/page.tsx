@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site, visibility as v } from "@/lib/content";
 import { Icon } from "@/components/Icon";
 import { ReviewCalc } from "@/components/ReviewCalc";
+import { TrafficCase } from "@/components/TrafficCase";
 import { Cta, Eyebrow, SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import { AuditBlock, Faq, FinalForm, SectionHead, Steps } from "@/components/Sections";
 
@@ -170,6 +171,8 @@ export default function VisibilityPage() {
             ))}
           </div>
         </section>
+
+        <TrafficCase />
 
         {/* Синергия */}
         <section className="container section">
